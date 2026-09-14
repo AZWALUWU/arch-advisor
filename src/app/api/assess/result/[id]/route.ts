@@ -3,10 +3,10 @@ import { supabase } from "@/lib/supabase/client";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     if (!id) {
       return NextResponse.json({ error: "Missing evaluation ID" }, { status: 400 });
