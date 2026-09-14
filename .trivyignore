@@ -1,0 +1,8 @@
+# Trivy Ignore File
+# Document accepted vulnerabilities with reason and expiry date.
+# Format: CVE-ID, Reason, Expiry Date
+
+# Example:
+# GHSA-xxxx-xxxx-xxxx - False positive in dev dependency, not used in production. Expiry: 2026-12-31
+
+# Add exceptions below when vulnerabilities are accepted after review:

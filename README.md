@@ -1,45 +1,51 @@
-# 🏗️ Arch Advisor
+# Arch Advisor
 
-> **AI-Powered Cloud Architecture Advisor AWS Well-Architected Framework Evaluator**
+> AI-Powered Architecture, PRD & Vibe Coding Suite
 
-Arch Advisor is an intelligent cloud architecture advisor built with **Next.js 15**, **Google Gemini AI**, **Tailwind CSS**, and **Supabase**. It helps developers, DevOps engineers, and solutions architects design, evaluate, and estimate costs for production-grade AWS cloud infrastructure based on custom application requirements.
-
----
-
-## 🌟 Key Features
-
-- 🧙‍♂️ **Interactive Assessment Wizard**: 6-step guided wizard capturing workload types, traffic patterns, data requirements, SLAs, security sensitivity, and budget constraints.
-- 🤖 **AI-Driven Architecture Generation**: Leverages Google Gemini AI to analyze system requirements and recommend tailored AWS architectures.
-- 📊 **Visual Architecture Diagrams**: Automatically generates interactive, visual cloud architecture diagrams powered by Mermaid.js.
-- 💰 **Automated Cost Estimator**: Calculates estimated monthly and yearly AWS cloud infrastructure costs broken down per service component.
-- 🛡️ **AWS Well-Architected Framework (WAF) Scoring**: Computes pilar scores (Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization) and presents interactive radar charts and actionable security checklists.
-- 💾 **Persistence & Sharing**: Stores historical assessment results securely in Supabase PostgreSQL for easy sharing and review via unique assessment URLs.
+Arch Advisor is a full-stack AI toolkit built with **Next.js 16**, **Google Gemini AI**, **Tailwind CSS**, and **Supabase**. Designed for vibe coders, founders, and solutions architects to go from a raw app concept all the way to a production-grade AWS cloud architecture — in minutes.
 
 ---
 
-## 🛠️ Tech Stack
+## Key Features
 
-- **Framework**: [Next.js 15](https://nextjs.org/) (App Router, Server Actions, Route Handlers)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **AI Engine**: [Google Gemini AI API](https://ai.google.dev/) (`gemini-3.6-flash`)
-- **Database & Auth**: [Supabase](https://supabase.com/) (PostgreSQL)
-- **Styling & UI**: [Tailwind CSS](https://tailwindcss.com/), [Framer Motion](https://www.framer.com/motion/), [Lucide React](https://lucide.dev/)
-- **Diagramming & Charts**: [Mermaid.js](https://mermaid.js.org/), [Recharts](https://recharts.org/)
-- **Validation**: [Zod](https://zod.dev/)
+### Interactive Vibe Roadmap
+Paste any PRD document and generate a non-linear, branching Mermaid flowchart with clickable nodes. Each node opens a modal containing an ultra-detailed AI prompt tailored for Cursor, Claude, Windsurf, or any AI coding assistant — ready to copy and paste.
+
+### MVP PRD Generator
+A 4-step guided wizard (App Concept → MVP Features → Tech Stack → SaaS & Services) that produces a GitHub-ready PRD markdown document. The output can be directly piped into the Vibe Roadmap generator.
+
+### AWS Architecture Advisor
+A 6-step wizard that analyzes workload type, traffic patterns, data requirements, SLA targets, security sensitivity, and budget constraints to generate:
+- AWS architecture diagrams rendered via Mermaid.js
+- AWS Well-Architected Framework (WAF) scores across 5 pillars with radar charts and security checklists
+- Estimated monthly and yearly costs broken down per AWS service
+- Persistent, shareable results stored in Supabase via unique assessment URLs
 
 ---
 
-## 🚀 Getting Started
+## Tech Stack
 
-Follow these instructions to set up and run Arch Advisor locally on your machine.
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16.3.5 — App Router, Route Handlers |
+| Language | TypeScript 5 |
+| AI Engine | Google Gemini AI (`gemini-3.6-flash`) via `@google/generative-ai` |
+| Database | Supabase (PostgreSQL) |
+| Styling | Tailwind CSS v4, Framer Motion, Lucide React |
+| Diagrams & Charts | Mermaid.js, Recharts |
+| Validation | Zod v3, React Hook Form + `@hookform/resolvers` |
+| Runtime | React 19.2, React DOM 19.2 |
+
+---
+
+## Getting Started
 
 ### Prerequisites
 
-Ensure you have the following installed on your system:
-- **Node.js**: `v18.x` or higher
-- **npm** / **yarn** / **pnpm** / **bun**
-- A **Supabase** project account (for PostgreSQL storage)
-- A **Google Gemini API Key**
+- Node.js `v18.x` or higher
+- npm / yarn / pnpm / bun
+- A Supabase project (for PostgreSQL storage)
+- A Google Gemini API Key
 
 ### 1. Clone the Repository
 
@@ -54,28 +60,32 @@ cd arch-advisor
 npm install
 ```
 
-### 3. Environment Variables Setup
+### 3. Environment Variables
 
-Copy the sample environment file and populate it with your API credentials:
+Copy the sample environment file and fill in your credentials:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Edit `.env.local` and add your keys:
+Edit `.env.local`:
 
 ```env
-# Supabase Configuration
-NEXT_PUBLIC_SUPABASE_URL=https://your-supabase-project.supabase.co
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 
-# Google Gemini AI Configuration
+# Google Gemini AI
 GEMINI_API_KEY=your-gemini-api-key
 ```
 
-### 4. Database Setup (Supabase Migration)
+### 4. Database Setup
 
-Execute the SQL script located at `src/migrations/sep14.sql` in your Supabase SQL Editor to create the required tables and indexes.
+Run the migration SQL in your Supabase SQL Editor:
+
+```
+src/migrations/sep14.sql
+```
 
 ### 5. Run Development Server
 
@@ -83,64 +93,94 @@ Execute the SQL script located at `src/migrations/sep14.sql` in your Supabase SQ
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to start using Arch Advisor.
+Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## 📂 Project Structure
-
-A brief overview of the directory organization inside `src/`:
+## Project Structure
 
 ```
 src/
-├── app/                  # Next.js App Router (Pages & API endpoints)
-│   ├── assess/           # Multi-step wizard page
-│   ├── result/[id]/      # Architecture evaluation result dashboard
-│   └── api/assess/       # Backend route handlers for AI processing & DB persistence
-├── components/           # React UI components
-│   ├── ui/               # Header, Mermaid diagram renderer, etc.
-│   ├── wizard/           # Step 1 to Step 6 assessment form components
-│   └── result/           # WAF radar charts, cost breakdown, and architecture details
-├── lib/                  # Core engines & utilities
-│   ├── engine/           # Gemini AI integration, cost estimator, & WAF scorer
-│   ├── supabase/         # Supabase client initialization
-│   └── validations/      # Zod validation schemas
-├── migrations/           # PostgreSQL migration SQL scripts
-└── types/                # TypeScript interfaces and database types
+├── app/                         # Next.js App Router
+│   ├── page.tsx                 # Landing page
+│   ├── roadmap/                 # Interactive Vibe Roadmap page
+│   ├── prd/                     # MVP PRD Generator page
+│   ├── assess/                  # Architecture Assessment wizard page
+│   ├── result/[id]/             # Architecture result dashboard (persisted)
+│   └── api/
+│       ├── assess/              # Architecture submission & result fetch endpoints
+│       ├── prd/generate/        # PRD generation endpoint
+│       └── roadmap/generate/    # Roadmap flowchart generation endpoint
+├── components/
+│   ├── ui/                      # Header, MermaidDiagram renderer
+│   ├── wizard/                  # Steps 1-6 for architecture assessment
+│   ├── prd/                     # 4-step PRD builder + result view
+│   ├── roadmap/                 # Interactive flowchart, node modal, roadmap view
+│   └── result/                  # WAF radar chart, cost chart, architecture detail
+├── lib/
+│   ├── engine/
+│   │   ├── gemini.ts            # Gemini AI — architecture analysis
+│   │   ├── prd-generator.ts     # Gemini AI — PRD generation
+│   │   ├── roadmap-generator.ts # Gemini AI — branching roadmap flowchart
+│   │   ├── cost-estimator.ts    # AWS cost estimation engine
+│   │   └── waf-scorer.ts        # WAF pillar scoring engine
+│   ├── supabase/client.ts       # Supabase client
+│   └── validations/             # Zod schemas for all three flows
+├── migrations/sep14.sql         # PostgreSQL table definitions
+└── types/database.ts            # TypeScript types for DB & API payloads
 ```
 
-> 📖 **Detailed Directory Documentation**: For a comprehensive breakdown of every file inside `src/`, read [srcExplain.md](srcExplain.md).
+For a comprehensive per-file breakdown, see [srcExplain.md](srcExplain.md).
 
 ---
 
-## 🔄 System Architecture Workflow
+## Application Workflows
+
+### Vibe Roadmap
 
 ```mermaid
 flowchart LR
-    A["User Input (Wizard Steps 1-6)"] --> B["Zod Schema Validation"]
-    B --> C["Next.js API Handler (/api/assess/submit)"]
-    C --> D["Google Gemini AI Engine"]
-    C --> E["AWS Cost Estimator Engine"]
-    C --> F["WAF Scorer Engine"]
-    D --> G["Supabase PostgreSQL Storage"]
-    E --> G
-    F --> G
-    G --> H["Interactive Result Dashboard (/result/[id])"]
+    A["PRD Text Input"] --> B["POST /api/roadmap/generate"]
+    B --> C["Gemini AI — Branching Flowchart + Node Prompts"]
+    C --> D["Interactive Mermaid Graph"]
+    D --> E["Click Node — PromptNodeModal"]
+    E --> F["Copy AI Prompt to Cursor / Claude / Windsurf"]
+```
+
+### MVP PRD Generator
+
+```mermaid
+flowchart LR
+    A["4-Step Wizard"] --> B["Zod Validation"]
+    B --> C["POST /api/prd/generate"]
+    C --> D["Gemini AI — Structured PRD JSON"]
+    D --> E["PRD Result View + Export Markdown"]
+    E -->|Optional| F["Open in Vibe Roadmap"]
+```
+
+### Architecture Evaluation
+
+```mermaid
+flowchart LR
+    A["6-Step Wizard"] --> B["Zod Validation"]
+    B --> C["POST /api/assess/submit"]
+    C --> D["Gemini AI + Cost Estimator + WAF Scorer"]
+    D --> E["Supabase PostgreSQL"]
+    E --> F["/result/[id] Dashboard"]
 ```
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-Contributions are welcome! If you'd like to improve Arch Advisor:
 1. Fork the repository.
-2. Create a new feature branch (`git checkout -b feature/amazing-feature`).
-3. Commit your changes (`git commit -m 'Add amazing feature'`).
-4. Push to the branch (`git push origin feature/amazing-feature`).
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push: `git push origin feature/amazing-feature`
 5. Open a Pull Request.
 
 ---
 
-## 📄 License
+## License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+MIT License — see [LICENSE](LICENSE) for details.
