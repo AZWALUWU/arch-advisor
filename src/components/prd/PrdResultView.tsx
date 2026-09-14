@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Check, Download, Sparkles, FileText, Code, Database, Rocket, Layers } from "lucide-react";
+import { Copy, Check, Download, Sparkles, FileText, Code, Database, Rocket, Layers, ArrowRight, GitBranch } from "lucide-react";
 import { PrdGeneratedResult } from "@/lib/engine/prd-generator";
 
 interface PrdResultViewProps {
@@ -31,6 +31,11 @@ export function PrdResultView({ prd, onReset }: PrdResultViewProps) {
     URL.revokeObjectURL(url);
   };
 
+  const handleOpenVibeRoadmap = () => {
+    localStorage.setItem("arch_advisor_import_prd", prd.fullMarkdownContent);
+    window.location.href = "/roadmap";
+  };
+
   return (
     <div className="space-y-6 text-left w-full">
       {/* Header Actions */}
@@ -48,26 +53,28 @@ export function PrdResultView({ prd, onReset }: PrdResultViewProps) {
 
         <div className="flex flex-wrap items-center gap-2.5">
           <button
+            onClick={handleOpenVibeRoadmap}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 px-4 py-2.5 text-xs font-bold text-white hover:from-orange-500 hover:to-amber-400 transition-colors shadow-lg shadow-orange-600/20"
+          >
+            <GitBranch className="h-4 w-4" />
+            <span>Interactive Vibe Flowchart</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </button>
+
+          <button
             onClick={handleCopyMarkdown}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-orange-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-orange-500 transition-colors shadow-lg shadow-orange-600/20"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-slate-800 px-3.5 py-2.5 text-xs font-semibold text-slate-200 hover:bg-slate-700 transition-colors border border-slate-700"
           >
             {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-            <span>{copied ? "Copied!" : "Copy PRD Markdown"}</span>
+            <span>{copied ? "Copied!" : "Copy PRD"}</span>
           </button>
 
           <button
             onClick={handleDownloadMarkdown}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-slate-800 px-4 py-2.5 text-xs font-semibold text-slate-200 hover:bg-slate-700 hover:text-white transition-colors border border-slate-700"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3.5 py-2.5 text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-colors border border-slate-800"
           >
             <Download className="h-4 w-4" />
-            <span>Download PRD.md</span>
-          </button>
-
-          <button
-            onClick={onReset}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3.5 py-2.5 text-xs font-medium text-slate-400 hover:text-white transition-colors border border-slate-800"
-          >
-            Create New PRD
+            <span>Download</span>
           </button>
         </div>
       </div>
@@ -79,7 +86,7 @@ export function PrdResultView({ prd, onReset }: PrdResultViewProps) {
           { id: "features", label: "MVP Features", icon: Layers },
           { id: "stack", label: "Tech Stack & Services", icon: Code },
           { id: "data", label: "Data Schema Draft", icon: Database },
-          { id: "roadmap", label: "AI Vibe Coding Roadmap", icon: Rocket },
+          { id: "roadmap", label: "Interactive Vibe Roadmap Flowchart", icon: Rocket },
           { id: "markdown", label: "Raw Markdown", icon: FileText },
         ].map((tab) => {
           const Icon = tab.icon;
@@ -314,41 +321,25 @@ export function PrdResultView({ prd, onReset }: PrdResultViewProps) {
         )}
 
         {activeTab === "roadmap" && (
-          <div className="space-y-4">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider text-orange-400">
-              Step-by-Step AI Vibe Coding Prompt Roadmap
+          <div className="space-y-6 text-center py-6">
+            <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500/10 text-orange-400 ring-1 ring-orange-500/20 mb-2">
+              <GitBranch className="h-6 w-6" />
+            </div>
+            <h3 className="text-xl font-extrabold text-white">
+              Generate Interactive Branching Vibe Roadmap Flowchart
             </h3>
-            <p className="text-xs text-slate-400">
-              Copy these prompts into Cursor, Antigravity, or your favorite AI coding assistant to build your MVP step-by-step.
+            <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
+              Transform this PRD into a non-linear flowchart with branching decision paths, optional features, and interactive popup prompt modals.
             </p>
 
-            <div className="space-y-4 pt-2">
-              {prd.vibeCodingRoadmap.map((step) => (
-                <div
-                  key={step.stepNumber}
-                  className="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-3"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-orange-500/20 text-xs font-bold text-orange-400 border border-orange-500/30">
-                      {step.stepNumber}
-                    </span>
-                    <h4 className="text-sm font-bold text-white">{step.stepTitle}</h4>
-                  </div>
-
-                  <div className="relative rounded-xl border border-slate-800 bg-slate-900 p-3 text-xs font-mono text-slate-300 whitespace-pre-wrap">
-                    <span className="text-slate-500 block mb-1 text-[10px] font-semibold uppercase tracking-wider">
-                      AI Prompt Snippet:
-                    </span>
-                    {step.aiPromptSnippet}
-                  </div>
-
-                  <div className="text-xs text-slate-400">
-                    <strong className="text-emerald-400">Expected Deliverable: </strong>
-                    {step.expectedDeliverable}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <button
+              onClick={handleOpenVibeRoadmap}
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 px-6 py-3.5 text-xs font-bold text-white hover:from-orange-500 hover:to-amber-400 transition-all shadow-xl shadow-orange-600/25"
+            >
+              <GitBranch className="h-4 w-4" />
+              <span>Open in Vibe Roadmap Flowchart</span>
+              <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
         )}
 
@@ -370,7 +361,7 @@ export function PrdResultView({ prd, onReset }: PrdResultViewProps) {
               readOnly
               rows={18}
               value={prd.fullMarkdownContent}
-              className="w-full rounded-xl border border-slate-800 bg-slate-950 p-4 text-xs font-mono text-slate-300 focus:outline-none resize-none"
+              className="w-full rounded-xl border border-slate-950 p-4 text-xs font-mono text-slate-300 focus:outline-none resize-none"
             />
           </div>
         )}

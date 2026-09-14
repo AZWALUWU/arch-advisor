@@ -1,0 +1,76 @@
+"use client";
+
+import { useState } from "react";
+import { RoadmapGeneratedResult, RoadmapNode } from "@/lib/engine/roadmap-generator";
+import { InteractiveFlowchart } from "./InteractiveFlowchart";
+import { PromptNodeModal } from "./PromptNodeModal";
+import { Sparkles, ArrowLeft, Download, Copy, Check } from "lucide-react";
+
+interface RoadmapViewProps {
+  roadmap: RoadmapGeneratedResult;
+  onReset: () => void;
+}
+
+export function RoadmapView({ roadmap, onReset }: RoadmapViewProps) {
+  const [selectedNode, setSelectedNode] = useState<RoadmapNode | null>(null);
+  const [copiedAll, setCopiedAll] = useState(false);
+
+  const handleCopyAllPrompts = () => {
+    const fullText = roadmap.nodes
+      .map(
+        (n) =>
+          `### [${n.id}] ${n.title}\nCategory: ${n.category} | Branch: ${n.branchType}\nDeliverable: ${n.expectedDeliverable}\n\nAI PROMPT:\n${n.detailedAiPrompt}\n\n---\n`
+      )
+      .join("\n");
+
+    navigator.clipboard.writeText(fullText);
+    setCopiedAll(true);
+    setTimeout(() => setCopiedAll(false), 2000);
+  };
+
+  return (
+    <div className="space-y-6 text-left w-full">
+      {/* Header Bar */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+        <div>
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-orange-500/10 px-3 py-1 text-xs font-semibold text-orange-400 ring-1 ring-orange-500/20 mb-2">
+            <Sparkles className="h-3.5 w-3.5" />
+            <span>Interactive Vibe Coding Flowchart</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            {roadmap.projectName} Roadmap
+          </h1>
+          <p className="text-xs text-slate-400 mt-1 max-w-xl">{roadmap.overview}</p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            onClick={handleCopyAllPrompts}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-orange-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-orange-500 transition-colors shadow-lg shadow-orange-600/20"
+          >
+            {copiedAll ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+            <span>{copiedAll ? "Copied All Prompts!" : "Copy All AI Prompts"}</span>
+          </button>
+
+          <button
+            onClick={onReset}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3.5 py-2.5 text-xs font-medium text-slate-400 hover:text-white transition-colors border border-slate-800"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span>Import Another PRD</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Main Flowchart & Node Selection */}
+      <InteractiveFlowchart
+        mermaidGraph={roadmap.mermaidGraph}
+        nodes={roadmap.nodes}
+        onSelectNode={(node) => setSelectedNode(node)}
+      />
+
+      {/* Modal Window */}
+      <PromptNodeModal node={selectedNode} onClose={() => setSelectedNode(null)} />
+    </div>
+  );
+}

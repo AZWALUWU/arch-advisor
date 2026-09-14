@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Cpu, Sparkles, FileCode, Layers } from "lucide-react";
+import { Cpu, Sparkles, FileCode, Layers, GitBranch } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
 export function Header() {
@@ -31,6 +31,14 @@ export function Header() {
             >
               <FileCode className="h-3.5 w-3.5 text-amber-400" />
               <span>MVP PRD Builder</span>
+            </Link>
+
+            <Link
+              href="/roadmap"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-900 rounded-lg transition-colors"
+            >
+              <GitBranch className="h-3.5 w-3.5 text-emerald-400" />
+              <span>Vibe Roadmap</span>
             </Link>
           </nav>
         </div>
