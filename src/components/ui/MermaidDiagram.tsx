@@ -13,12 +13,12 @@ mermaid.initialize({
   theme: "dark",
   themeVariables: {
     darkMode: true,
-    background: "#090d16",
-    primaryColor: "#f97316",
-    primaryTextColor: "#ffffff",
-    lineColor: "#38bdf8",
-    secondaryColor: "#1e293b",
-    tertiaryColor: "#0f172a",
+    background: "#1F150C",
+    primaryColor: "#412D15",
+    primaryTextColor: "#E1DCC9",
+    lineColor: "#E1DCC9",
+    secondaryColor: "#1F150C",
+    tertiaryColor: "#000000",
     fontFamily: "ui-sans-serif, system-ui, sans-serif",
   },
   securityLevel: "loose",
@@ -39,12 +39,11 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ chart, className
       setErrorMsg(null);
 
       try {
-        // Hapus whitespace berlebih di awal & akhir
         const cleanChart = chart.trim();
         const uniqueId = `mermaid-svg-${Math.random().toString(36).substring(2, 9)}`;
-        
+
         const { svg } = await mermaid.render(uniqueId, cleanChart);
-        
+
         if (isMounted) {
           setSvgContent(svg);
           setIsLoading(false);
@@ -52,7 +51,7 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ chart, className
       } catch (err: any) {
         console.error("Mermaid Render Error:", err);
         if (isMounted) {
-          setErrorMsg(err?.message || "Gagal merender diagram Mermaid.");
+          setErrorMsg(err?.message || "Failed to render Mermaid diagram.");
           setIsLoading(false);
         }
       }
@@ -67,9 +66,9 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ chart, className
 
   if (errorMsg) {
     return (
-      <div className="p-4 rounded-xl border border-red-900/50 bg-red-950/20 text-red-400 font-mono text-xs">
-        <p className="font-bold mb-1">⚠️ Syntax Error Mermaid:</p>
-        <p className="text-red-300/80">{errorMsg}</p>
+      <div className="p-4 rounded-xl border border-[#412D15] bg-[#1F150C] text-[#E1DCC9] font-mono text-xs">
+        <p className="font-bold mb-1">⚠️ Mermaid Syntax Error:</p>
+        <p className="text-[#E1DCC9]/80">{errorMsg}</p>
       </div>
     );
   }
@@ -77,9 +76,9 @@ export const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ chart, className
   return (
     <div className={`relative w-full overflow-x-auto flex items-center justify-center min-h-[300px] ${className}`}>
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-slate-950/50 backdrop-blur-sm z-10">
-          <div className="flex items-center gap-2 text-xs text-orange-400 font-mono">
-            <span className="h-2 w-2 rounded-full bg-orange-400 animate-ping" />
+        <div className="absolute inset-0 flex items-center justify-center bg-[#000000]/60 backdrop-blur-sm z-10">
+          <div className="flex items-center gap-2 text-xs text-[#E1DCC9] font-mono">
+            <span className="h-2 w-2 rounded-full bg-[#E1DCC9] animate-ping" />
             Rendering Topology Graph...
           </div>
         </div>

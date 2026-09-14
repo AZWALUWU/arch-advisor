@@ -61,35 +61,35 @@ function RoadmapContent() {
         <div className="w-full space-y-8 text-center">
           {/* Hero */}
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-orange-500/10 px-3.5 py-1 text-xs font-semibold text-orange-400 ring-1 ring-orange-500/20">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-[#412D15]/40 px-3.5 py-1 text-xs font-semibold text-[#E1DCC9] ring-1 ring-[#412D15]">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Interactive Vibe Coding Flowchart & Prompt Generator</span>
+              <span>Interactive Vibe Coding Flowchart &amp; Prompt Generator</span>
             </div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <h1 className="text-3xl font-extrabold tracking-tight text-[#E1DCC9] sm:text-4xl">
               Turn Any PRD into a Branching AI Vibe Roadmap
             </h1>
-            <p className="text-sm text-slate-400 max-w-xl mx-auto">
+            <p className="text-sm text-[#E1DCC9]/60 max-w-xl mx-auto">
               Paste your Product Requirement Document below to generate an interactive branching flowchart graph with high-precision AI prompts for every single phase.
             </p>
           </div>
 
           {/* Form Box */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8 backdrop-blur-md text-left space-y-4 shadow-2xl">
+          <div className="rounded-2xl border border-[#412D15] bg-[#1F150C]/60 p-6 sm:p-8 backdrop-blur-md text-left space-y-4 shadow-2xl">
             <div>
-              <label className="block text-xs font-semibold text-slate-200 mb-1.5 flex items-center justify-between">
+              <label className="block text-xs font-semibold text-[#E1DCC9] mb-1.5 flex items-center justify-between">
                 <span className="flex items-center gap-1.5">
-                  <FileText className="h-4 w-4 text-orange-400" />
+                  <FileText className="h-4 w-4 text-[#E1DCC9]/70" />
                   Paste Product Requirement Document (PRD.md)
                 </span>
-                <span className="text-[11px] text-slate-400">Markdown format supported</span>
+                <span className="text-[11px] text-[#E1DCC9]/50">Markdown format supported</span>
               </label>
 
               <textarea
                 rows={12}
                 value={prdText}
                 onChange={(e) => setPrdText(e.target.value)}
-                placeholder="Paste your PRD markdown text here... (e.g. # Acme App PRD\n## Executive Summary\nWe are building an AI workspace app...)"
-                className="w-full rounded-xl border border-slate-800 bg-slate-950 p-4 text-xs font-mono text-slate-200 placeholder-slate-500 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 resize-none shadow-inner"
+                placeholder="Paste your PRD markdown text here... (e.g. # Acme App PRD&#10;## Executive Summary&#10;We are building an AI workspace app...)"
+                className="w-full rounded-xl border border-[#412D15] bg-[#000000] p-4 text-xs font-mono text-[#E1DCC9] placeholder-[#E1DCC9]/30 focus:border-[#E1DCC9]/50 focus:outline-none focus:ring-1 focus:ring-[#E1DCC9]/30 resize-none shadow-inner"
               />
             </div>
 
@@ -100,14 +100,14 @@ function RoadmapContent() {
             )}
 
             <div className="flex items-center justify-between pt-2">
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-[#E1DCC9]/50">
                 {prdText.length} characters
               </span>
 
               <button
                 onClick={handleGenerate}
                 disabled={isLoading || prdText.trim().length < 30}
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 px-7 py-3 text-xs font-bold text-white hover:from-orange-500 hover:to-amber-400 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-xl shadow-orange-600/25"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#412D15] px-7 py-3 text-xs font-bold text-[#E1DCC9] hover:bg-[#412D15]/70 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-xl border border-[#E1DCC9]/20"
               >
                 {isLoading ? (
                   <>
@@ -132,9 +132,9 @@ function RoadmapContent() {
 
 export default function RoadmapPage() {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#000000] text-[#E1DCC9] flex flex-col">
       <Header />
-      <Suspense fallback={<div className="p-8 text-center text-slate-400">Loading Vibe Roadmap...</div>}>
+      <Suspense fallback={<div className="p-8 text-center text-[#E1DCC9]/50">Loading Vibe Roadmap...</div>}>
         <RoadmapContent />
       </Suspense>
     </div>

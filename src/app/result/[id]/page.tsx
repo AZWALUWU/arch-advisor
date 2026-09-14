@@ -36,26 +36,26 @@ export default async function ResultPage({
   const { ai_output, cost_estimate, waf_scores, project_description } = evaluation;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#000000] text-[#E1DCC9] flex flex-col">
       <Header />
 
       <main className="flex-1 container mx-auto max-w-6xl px-4 py-10 space-y-8">
         {/* Top Banner */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl border border-slate-800 bg-slate-900/80 p-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-2xl border border-[#412D15] bg-[#1F150C]/80 p-6">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold text-orange-400 uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#E1DCC9]/70 uppercase tracking-wider">
               <Cpu className="h-4 w-4" /> Evaluation Result ID: {evaluationId.substring(0, 8)}...
             </div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Recommendation Architecture AWS</h1>
-            <p className="text-sm text-slate-400 line-clamp-2">"{project_description}"</p>
+            <h1 className="text-2xl font-bold text-[#E1DCC9] tracking-tight">Recommendation Architecture AWS</h1>
+            <p className="text-sm text-[#E1DCC9]/60 line-clamp-2">&quot;{project_description}&quot;</p>
           </div>
         </div>
 
         {/* Executive Summary AI */}
         {ai_output?.executiveSummary && (
-          <div className="rounded-2xl border border-orange-500/20 bg-orange-500/5 p-6">
-            <h2 className="text-sm font-bold text-orange-400 uppercase tracking-wider mb-2">Executive Summary (Gemini AI)</h2>
-            <p className="text-sm text-slate-200 leading-relaxed">{ai_output.executiveSummary}</p>
+          <div className="rounded-2xl border border-[#412D15] bg-[#1F150C]/60 p-6">
+            <h2 className="text-sm font-bold text-[#E1DCC9] uppercase tracking-wider mb-2">Executive Summary (Gemini AI)</h2>
+            <p className="text-sm text-[#E1DCC9]/80 leading-relaxed">{ai_output.executiveSummary}</p>
           </div>
         )}
 

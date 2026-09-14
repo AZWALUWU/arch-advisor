@@ -148,7 +148,7 @@ export default function AssessWizardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#000000] text-[#E1DCC9] flex flex-col">
       <Header />
 
       <main className="flex-1 container mx-auto max-w-3xl px-4 py-10 flex flex-col items-center">
@@ -162,7 +162,7 @@ export default function AssessWizardPage() {
         </div>
 
         {/* Wizard Form Card Wrapper */}
-        <div className="w-full rounded-2xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8 backdrop-blur-sm shadow-2xl relative overflow-hidden">
+        <div className="w-full rounded-2xl border border-[#412D15] bg-[#1F150C]/60 p-6 sm:p-8 backdrop-blur-sm shadow-2xl relative overflow-hidden">
           {/* Active Step Content */}
           <div className="min-h-[380px]">{renderStepContent()}</div>
 
@@ -174,7 +174,7 @@ export default function AssessWizardPage() {
           )}
 
           {/* Navigation Controls */}
-          <div className="mt-8 flex items-center justify-between border-t border-slate-800/80 pt-6">
+          <div className="mt-8 flex items-center justify-between border-t border-[#412D15]/80 pt-6">
             <button
               type="button"
               onClick={handleBack}
@@ -182,7 +182,7 @@ export default function AssessWizardPage() {
               className={`flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all ${
                 currentStep === 0 || isSubmitting
                   ? "opacity-0 pointer-events-none"
-                  : "bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white"
+                  : "bg-[#412D15] text-[#E1DCC9] hover:bg-[#412D15]/70 border border-[#412D15]"
               }`}
             >
               <ArrowLeft className="h-4 w-4" />
@@ -193,7 +193,7 @@ export default function AssessWizardPage() {
               type="button"
               onClick={handleNext}
               disabled={isSubmitting}
-              className="flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-600/20 hover:bg-orange-500 transition-all disabled:opacity-50"
+              className="flex items-center gap-2 rounded-xl bg-[#412D15] px-6 py-2.5 text-sm font-semibold text-[#E1DCC9] shadow-lg hover:bg-[#412D15]/70 transition-all disabled:opacity-50 border border-[#E1DCC9]/20"
             >
               {isSubmitting ? (
                 <>

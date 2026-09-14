@@ -40,8 +40,8 @@ export function PrdStep2Features({ formData, updateField }: Step2Props) {
       className="space-y-6 text-left"
     >
       <div>
-        <h2 className="text-xl font-bold text-white tracking-tight">MVP Core Features</h2>
-        <p className="text-xs text-slate-400 mt-1">
+        <h2 className="text-xl font-bold text-[#E1DCC9] tracking-tight">MVP Core Features</h2>
+        <p className="text-xs text-[#E1DCC9]/70 mt-1">
           Select the essential must-have features for your MVP (version 1.0).
         </p>
       </div>
@@ -56,22 +56,22 @@ export function PrdStep2Features({ formData, updateField }: Step2Props) {
               onClick={() => toggleFeature(feat.label)}
               className={`flex items-start gap-3 p-3.5 rounded-xl border text-left transition-all ${
                 isSelected
-                  ? "border-orange-500 bg-orange-500/10 text-white ring-1 ring-orange-500"
-                  : "border-slate-800 bg-slate-900/60 text-slate-300 hover:border-slate-700 hover:bg-slate-900"
+                  ? "border-[#E1DCC9] bg-[#412D15] text-[#E1DCC9] ring-1 ring-[#E1DCC9]"
+                  : "border-[#412D15] bg-[#1F150C]/80 text-[#E1DCC9]/80 hover:border-[#E1DCC9]/50 hover:bg-[#1F150C]"
               }`}
             >
               <div
                 className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors ${
                   isSelected
-                    ? "border-orange-500 bg-orange-500 text-white"
-                    : "border-slate-700 bg-slate-800"
+                    ? "border-[#E1DCC9] bg-[#E1DCC9] text-[#000000]"
+                    : "border-[#412D15] bg-[#000000]"
                 }`}
               >
                 {isSelected && <Check className="h-3 w-3" />}
               </div>
               <div>
                 <span className="text-xs font-semibold block">{feat.label}</span>
-                <span className="text-[11px] text-slate-400 mt-0.5 block">{feat.desc}</span>
+                <span className="text-[11px] text-[#E1DCC9]/70 mt-0.5 block">{feat.desc}</span>
               </div>
             </button>
           );
@@ -80,7 +80,7 @@ export function PrdStep2Features({ formData, updateField }: Step2Props) {
 
       {/* Additional Custom Features */}
       <div>
-        <label className="block text-xs font-semibold text-slate-200 mb-1.5">
+        <label className="block text-xs font-semibold text-[#E1DCC9] mb-1.5">
           Custom / Specific MVP Features (Optional)
         </label>
         <textarea
@@ -88,7 +88,7 @@ export function PrdStep2Features({ formData, updateField }: Step2Props) {
           value={formData.customFeatures || ""}
           onChange={(e) => updateField("customFeatures", e.target.value)}
           placeholder="List any unique or custom business logic features for your application..."
-          className="w-full rounded-xl border border-slate-800 bg-slate-900/80 p-3 text-sm text-slate-100 placeholder-slate-500 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 resize-none"
+          className="w-full rounded-xl border border-[#412D15] bg-[#1F150C] p-3 text-sm text-[#E1DCC9] placeholder-[#E1DCC9]/40 focus:border-[#E1DCC9] focus:outline-none focus:ring-1 focus:ring-[#E1DCC9] resize-none"
         />
       </div>
     </motion.div>

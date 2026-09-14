@@ -31,24 +31,24 @@ export function WafRadarChart({ scores }: WafRadarChartProps) {
   ];
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 backdrop-blur-sm">
-      <div className="border-b border-slate-800 pb-4 mb-4">
-        <h3 className="text-lg font-bold text-white">WAF 6 Pillars Alignment</h3>
-        <p className="text-xs text-slate-400">Architecture alignment score (0 - 100)</p>
+    <div className="rounded-2xl border border-[#412D15] bg-[#1F150C]/60 p-6 backdrop-blur-sm">
+      <div className="border-b border-[#412D15] pb-4 mb-4">
+        <h3 className="text-lg font-bold text-[#E1DCC9]">WAF 6 Pillars Alignment</h3>
+        <p className="text-xs text-[#E1DCC9]/60">Architecture alignment score (0 - 100)</p>
       </div>
 
       <div className="h-[280px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart cx="50%" cy="50%" outerRadius="70%" data={data}>
-            <PolarGrid stroke="#334155" />
-            <PolarAngleAxis dataKey="pillar" stroke="#94a3b8" tick={{ fill: "#94a3b8", fontSize: 11 }} />
-            <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#475569" />
+            <PolarGrid stroke="#412D15" />
+            <PolarAngleAxis dataKey="pillar" stroke="#E1DCC9" tick={{ fill: "#E1DCC9", fontSize: 11, opacity: 0.7 }} />
+            <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#412D15" />
             <Radar
               name="WAF Score"
               dataKey="score"
-              stroke="#f97316"
-              fill="#f97316"
-              fillOpacity={0.4}
+              stroke="#E1DCC9"
+              fill="#412D15"
+              fillOpacity={0.5}
             />
           </RadarChart>
         </ResponsiveContainer>

@@ -17,8 +17,8 @@ export function PrdStep3TechStack({ formData, updateField }: Step3Props) {
       className="space-y-6 text-left"
     >
       <div>
-        <h2 className="text-xl font-bold text-white tracking-tight">Preferred Tech Stack</h2>
-        <p className="text-xs text-slate-400 mt-1">
+        <h2 className="text-xl font-bold text-[#E1DCC9] tracking-tight">Preferred Tech Stack</h2>
+        <p className="text-xs text-[#E1DCC9]/70 mt-1">
           Choose the primary technologies you plan to use for your application code.
         </p>
       </div>

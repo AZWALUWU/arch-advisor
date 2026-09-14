@@ -113,7 +113,7 @@ export default function PrdBuilderPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#000000] text-[#E1DCC9] flex flex-col">
       <Header />
 
       <main className="flex-1 container mx-auto max-w-4xl px-4 py-8 flex flex-col items-center">
@@ -123,14 +123,14 @@ export default function PrdBuilderPage() {
           <div className="w-full space-y-8">
             {/* Top Heading */}
             <div className="text-center space-y-2">
-              <div className="inline-flex items-center gap-1.5 rounded-full bg-orange-500/10 px-3.5 py-1 text-xs font-semibold text-orange-400 ring-1 ring-orange-500/20">
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-[#412D15]/40 px-3.5 py-1 text-xs font-semibold text-[#E1DCC9] ring-1 ring-[#412D15]">
                 <Sparkles className="h-3.5 w-3.5" />
-                <span>MVP PRD Generator for Vibe Coders & Founders</span>
+                <span>MVP PRD Generator for Vibe Coders &amp; Founders</span>
               </div>
-              <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+              <h1 className="text-3xl font-extrabold tracking-tight text-[#E1DCC9] sm:text-4xl">
                 Build Your MVP PRD Specification
               </h1>
-              <p className="text-sm text-slate-400 max-w-xl mx-auto">
+              <p className="text-sm text-[#E1DCC9]/60 max-w-xl mx-auto">
                 Define your app idea, tech stack, and SaaS integrations to generate an AI-ready PRD for Cursor, Antigravity, or your development team.
               </p>
             </div>
@@ -143,7 +143,7 @@ export default function PrdBuilderPage() {
             />
 
             {/* Step Form Container */}
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8 backdrop-blur-md shadow-2xl">
+            <div className="rounded-2xl border border-[#412D15] bg-[#1F150C]/60 p-6 sm:p-8 backdrop-blur-md shadow-2xl">
               {currentStep === 0 && (
                 <PrdStep1Concept formData={formData} updateField={updateField} />
               )}
@@ -164,12 +164,12 @@ export default function PrdBuilderPage() {
               )}
 
               {/* Navigation Controls */}
-              <div className="mt-8 flex items-center justify-between border-t border-slate-800/80 pt-6">
+              <div className="mt-8 flex items-center justify-between border-t border-[#412D15]/80 pt-6">
                 <button
                   type="button"
                   onClick={handleBack}
                   disabled={currentStep === 0 || isLoading}
-                  className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-semibold text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all border border-slate-800"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#1F150C] px-4 py-2.5 text-xs font-semibold text-[#E1DCC9]/70 hover:bg-[#412D15] hover:text-[#E1DCC9] disabled:opacity-40 disabled:cursor-not-allowed transition-all border border-[#412D15]"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   <span>Back</span>
@@ -180,7 +180,7 @@ export default function PrdBuilderPage() {
                     type="button"
                     onClick={handleNext}
                     disabled={!isStepValid()}
-                    className="inline-flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-2.5 text-xs font-semibold text-white hover:bg-orange-500 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg shadow-orange-600/20"
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#412D15] px-6 py-2.5 text-xs font-semibold text-[#E1DCC9] hover:bg-[#412D15]/70 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-lg border border-[#E1DCC9]/20"
                   >
                     <span>Next Step</span>
                     <ArrowRight className="h-4 w-4" />
@@ -190,7 +190,7 @@ export default function PrdBuilderPage() {
                     type="button"
                     onClick={handleSubmit}
                     disabled={isLoading || !isStepValid()}
-                    className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 px-7 py-3 text-xs font-bold text-white hover:from-orange-500 hover:to-amber-400 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-xl shadow-orange-600/25"
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#412D15] px-7 py-3 text-xs font-bold text-[#E1DCC9] hover:bg-[#412D15]/70 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-xl border border-[#E1DCC9]/20"
                   >
                     {isLoading ? (
                       <>

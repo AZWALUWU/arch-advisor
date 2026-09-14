@@ -55,26 +55,26 @@ export function ArchitectureDiagram({ mermaidSyntax }: ArchitectureDiagramProps)
   };
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 backdrop-blur-sm">
-      <div className="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+    <div className="rounded-2xl border border-[#412D15] bg-[#1F150C]/60 p-6 backdrop-blur-sm">
+      <div className="flex items-center justify-between border-b border-[#412D15] pb-4 mb-4">
         <div>
-          <h3 className="text-lg font-bold text-white">AWS Architecture Topo Diagram</h3>
-          <p className="text-xs text-slate-400">Visualization of the recommended network and service schema</p>
+          <h3 className="text-lg font-bold text-[#E1DCC9]">AWS Architecture Topo Diagram</h3>
+          <p className="text-xs text-[#E1DCC9]/60">Visualization of the recommended network and service schema</p>
         </div>
         <button
           onClick={downloadSvg}
           disabled={isLoading}
-          className="flex items-center gap-2 rounded-lg bg-slate-800 px-3 py-1.5 text-xs font-medium text-slate-200 hover:bg-slate-700 transition-colors border border-slate-700"
+          className="flex items-center gap-2 rounded-lg bg-[#412D15] px-3 py-1.5 text-xs font-medium text-[#E1DCC9] hover:bg-[#412D15]/70 transition-colors border border-[#412D15]"
         >
           <Download className="h-4 w-4" />
           <span>Export SVG</span>
         </button>
       </div>
 
-      <div className="flex items-center justify-center min-h-[300px] overflow-x-auto p-4 bg-slate-950/50 rounded-xl border border-slate-800/80">
+      <div className="flex items-center justify-center min-h-[300px] overflow-x-auto p-4 bg-[#000000]/50 rounded-xl border border-[#412D15]/80">
         {isLoading ? (
-          <div className="flex items-center gap-2 text-slate-400 text-sm">
-            <RefreshCw className="h-4 w-4 animate-spin text-orange-500" />
+          <div className="flex items-center gap-2 text-[#E1DCC9]/50 text-sm">
+            <RefreshCw className="h-4 w-4 animate-spin text-[#E1DCC9]/70" />
             <span>Rendering diagram...</span>
           </div>
         ) : (

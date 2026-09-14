@@ -31,22 +31,22 @@ export function RoadmapView({ roadmap, onReset }: RoadmapViewProps) {
   return (
     <div className="space-y-6 text-left w-full">
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-5">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#412D15] pb-5">
         <div>
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-orange-500/10 px-3 py-1 text-xs font-semibold text-orange-400 ring-1 ring-orange-500/20 mb-2">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-[#412D15]/40 px-3 py-1 text-xs font-semibold text-[#E1DCC9] ring-1 ring-[#412D15] mb-2">
             <Sparkles className="h-3.5 w-3.5" />
             <span>Interactive Vibe Coding Flowchart</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#E1DCC9] tracking-tight">
             {roadmap.projectName} Roadmap
           </h1>
-          <p className="text-xs text-slate-400 mt-1 max-w-xl">{roadmap.overview}</p>
+          <p className="text-xs text-[#E1DCC9]/60 mt-1 max-w-xl">{roadmap.overview}</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
           <button
             onClick={handleCopyAllPrompts}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-orange-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-orange-500 transition-colors shadow-lg shadow-orange-600/20"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[#412D15] px-4 py-2.5 text-xs font-semibold text-[#E1DCC9] hover:bg-[#412D15]/70 transition-colors shadow-lg border border-[#E1DCC9]/20"
           >
             {copiedAll ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
             <span>{copiedAll ? "Copied All Prompts!" : "Copy All AI Prompts"}</span>
@@ -54,7 +54,7 @@ export function RoadmapView({ roadmap, onReset }: RoadmapViewProps) {
 
           <button
             onClick={onReset}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-3.5 py-2.5 text-xs font-medium text-slate-400 hover:text-white transition-colors border border-slate-800"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[#1F150C] px-3.5 py-2.5 text-xs font-medium text-[#E1DCC9]/60 hover:text-[#E1DCC9] transition-colors border border-[#412D15]"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Import Another PRD</span>

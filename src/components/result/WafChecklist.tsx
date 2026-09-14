@@ -23,22 +23,22 @@ export function WafChecklist({ checklist }: WafChecklistProps) {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 backdrop-blur-sm">
-      <div className="border-b border-slate-800 pb-4 mb-4">
-        <h3 className="text-lg font-bold text-white">Well-Architected Actionable Checklist</h3>
-        <p className="text-xs text-slate-400">Prioritized recommendations for architecture improvements</p>
+    <div className="rounded-2xl border border-[#412D15] bg-[#1F150C]/60 p-6 backdrop-blur-sm">
+      <div className="border-b border-[#412D15] pb-4 mb-4">
+        <h3 className="text-lg font-bold text-[#E1DCC9]">Well-Architected Actionable Checklist</h3>
+        <p className="text-xs text-[#E1DCC9]/60">Prioritized recommendations for architecture improvements</p>
       </div>
 
       <div className="space-y-3">
         {checklist.map((check, idx) => (
-          <div key={idx} className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/60">
+          <div key={idx} className="flex items-start gap-3 p-3.5 rounded-xl bg-[#000000]/40 border border-[#412D15]/60">
             <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0 mt-0.5" />
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-orange-400 uppercase tracking-wider">{check.category}</span>
+                <span className="text-xs font-semibold text-[#E1DCC9]/70 uppercase tracking-wider">{check.category}</span>
                 {getSeverityBadge(check.severity)}
               </div>
-              <p className="text-sm text-slate-300 leading-relaxed">{check.item}</p>
+              <p className="text-sm text-[#E1DCC9]/80 leading-relaxed">{check.item}</p>
             </div>
           </div>
         ))}
