@@ -8,22 +8,18 @@ This document provides a detailed explanation of all folders and files within th
 Manages main page navigation (Pages) and backend API endpoints (Route Handlers).
 
 - **`layout.tsx`**: Root Layout wrapping all application pages (applies global fonts, Tailwind CSS, and header navigation).
-- **`page.tsx`**: Main Landing Page featuring Architecture Evaluation, MVP PRD Builder, and Interactive Vibe Roadmap tools.
-- **`globals.css`**: Global stylesheet file based on Tailwind CSS.
-- **`favicon.ico`**: Browser tab icon.
+- **`page.tsx`**: Main Landing Page featuring Hero section, Stats bar, Feature showcases for MVP PRD Builder, Vibe Roadmap, and AWS Architecture Advisor tools.
+- **`globals.css`**: Global stylesheet file based on Tailwind CSS v4.
+- **`icon.svg`**: SVG favicon matching the navbar logo (Cpu chip icon).
 - **`app/assess/`**
-  - **`page.tsx`**: Page where users complete the multi-step architecture assessment wizard form.
+  - **`page.tsx`**: Multi-step architecture assessment wizard with inline result display (no redirect).
 - **`app/prd/`**
-  - **`page.tsx`**: Page where vibe coders, founders, and clients complete the 4-step MVP PRD Builder form.
+  - **`page.tsx`**: 4-step MVP PRD Builder wizard with inline result view.
 - **`app/roadmap/`**
   - **`page.tsx`**: Standalone page for importing/pasting PRDs and generating interactive non-linear Vibe Coding Roadmap Flowcharts.
-- **`app/result/[id]/`**
-  - **`page.tsx`**: Page displaying the generated cloud architecture recommendation, Mermaid diagram, cost breakdown, and Well-Architected Framework (WAF) analysis based on assessment ID.
 - **`app/api/`** (Next.js Backend API Routes)
   - `app/api/assess/`:
-    - **`route.ts`**: API route handler for processing initial assessment requests.
-    - `submit/` → **`route.ts`**: Endpoint for receiving wizard form submissions, triggering the AI engine, and saving results to Supabase.
-    - `result/[id]/` → **`route.ts`**: Endpoint for fetching saved assessment recommendation data from the database by ID.
+    - **`route.ts`**: API endpoint that validates form input, runs Gemini AI analysis + cost estimation + WAF scoring, and returns results directly to the client.
   - `app/api/prd/`:
     - `generate/` → **`route.ts`**: Endpoint for validating PRD inputs and invoking Gemini AI to generate structured PRD specifications.
   - `app/api/roadmap/`:
@@ -34,8 +30,16 @@ Manages main page navigation (Pages) and backend API endpoints (Route Handlers).
 ## 2. Folder `src/components/` (React UI Components)
 
 ### `components/ui/` (General UI Components)
-- **`Header.tsx`**: Top navigation header bar component with links to Architecture Evaluator, MVP PRD Builder, and Vibe Roadmap.
+- **`Header.tsx`**: Minimalist sticky navigation header with ArchAdvisor logo and GitHub Open Source link.
 - **`MermaidDiagram.tsx`**: Visual renderer component converting Mermaid.js syntax strings into interactive cloud architecture diagrams.
+
+### `components/landing/` (Landing Page Components)
+- **`HeroSection.tsx`**: Hero section with gradient glow effects, headline, subheadline, CTA buttons, trust badges, and browser mockup screenshot.
+- **`StatsBar.tsx`**: 3-column statistics bar with icons showing key metrics (3-in-1 tools, Minutes, Free).
+- **`CtaButtons.tsx`**: Reusable CTA button group linking to Roadmap, PRD, and Assess tools.
+- **`FeatureShowcase.tsx`**: Reusable feature section with text content, bullet points, and single screenshot (supports reverse layout).
+- **`FeatureShowcaseMulti.tsx`**: Feature section with text content and 3-image grid layout (used for AWS Architecture).
+- **`CtaBanner.tsx`**: Final CTA conversion section with gradient background and decorative corner accents.
 
 ### `components/wizard/` (Multi-Step Architecture Assessment Form Components)
 - **`ProgressStepper.tsx`**: Step progress indicator (Steps 1 through 6).
@@ -70,7 +74,7 @@ Manages main page navigation (Pages) and backend API endpoints (Route Handlers).
 
 ---
 
-## 3. Folder `src/lib/` (Core Business Logic, Clients & AI Engine)
+## 3. Folder `src/lib/` (Core Business Logic & AI Engine)
 
 ### `lib/engine/` (Core Logic & AI Processor)
 - **`gemini.ts`**: Google Gemini AI API integration module for analyzing architecture assessment input.
@@ -79,9 +83,6 @@ Manages main page navigation (Pages) and backend API endpoints (Route Handlers).
 - **`cost-estimator.ts`**: Calculation algorithm for estimating AWS service costs.
 - **`waf-scorer.ts`**: Evaluation algorithm scoring AWS Well-Architected Framework pillars.
 
-### `lib/supabase/`
-- **`client.ts`**: Supabase client initialization for interacting with the PostgreSQL database backend.
-
 ### `lib/validations/`
 - **`form-schema.ts`**: Zod validation schema ensuring data integrity of architecture wizard form inputs.
 - **`prd-schema.ts`**: Zod validation schema ensuring data integrity of PRD builder inputs.
@@ -89,13 +90,8 @@ Manages main page navigation (Pages) and backend API endpoints (Route Handlers).
 
 ---
 
-## 4. Folder `src/migrations/` (Database Migrations)
-- **`sep14.sql`**: SQL migration script creating PostgreSQL/Supabase database tables for assessments and recommendation results.
-
----
-
-## 5. Folder `src/types/` (TypeScript Interfaces & Types)
-- **`database.ts`**: TypeScript type definitions mapping Supabase database schemas and application API payloads.
+## 4. Folder `src/types/` (TypeScript Interfaces & Types)
+- **`database.ts`**: TypeScript type definitions for AI output, cost estimates, WAF scores, and service recommendations.
 
 ---
 
@@ -104,9 +100,8 @@ Manages main page navigation (Pages) and backend API endpoints (Route Handlers).
 ### 1. Architecture Evaluation Workflow
 1. **User Input**: Users fill out the multi-step wizard (`components/wizard`) on the assessment page (`app/assess/page.tsx`).
 2. **Validation**: Input data is validated by Zod (`lib/validations/form-schema.ts`).
-3. **Backend Processing**: Data is submitted via API (`app/api/assess/submit/route.ts`), analyzed by Gemini AI (`lib/engine/gemini.ts`), costs estimated (`lib/engine/cost-estimator.ts`), and WAF scored (`lib/engine/waf-scorer.ts`).
-4. **Data Persistence**: Results stored in Supabase PostgreSQL (`lib/supabase/client.ts`).
-5. **Visualization**: Redirected to `/result/[id]` for Mermaid diagrams and WAF charts.
+3. **Backend Processing**: Data is submitted via API (`app/api/assess/route.ts`), analyzed by Gemini AI (`lib/engine/gemini.ts`), costs estimated (`lib/engine/cost-estimator.ts`), and WAF scored (`lib/engine/waf-scorer.ts`).
+4. **Result Display**: Results are returned directly from the API and displayed inline in the wizard page.
 
 ### 2. MVP PRD Generator Workflow
 1. **User Input**: Users complete the 4-step PRD Builder (`components/prd`) on the PRD page (`app/prd/page.tsx`).

@@ -2,7 +2,7 @@
 
 > AI-Powered Architecture, PRD & Vibe Coding Suite
 
-Arch Advisor is a full-stack AI toolkit built with **Next.js 16**, **Google Gemini AI**, **Tailwind CSS**, and **Supabase**. Designed for vibe coders, founders, and solutions architects to go from a raw app concept all the way to a production-grade AWS cloud architecture — in minutes.
+Arch Advisor is a full-stack AI toolkit built with **Next.js 16**, **Google Gemini AI**, and **Tailwind CSS**. Designed for vibe coders, founders, and solutions architects to go from a raw app concept all the way to a production-grade AWS cloud architecture — in minutes.
 
 ---
 
@@ -17,9 +17,8 @@ A 4-step guided wizard (App Concept → MVP Features → Tech Stack → SaaS & S
 ### AWS Architecture Advisor
 A 6-step wizard that analyzes workload type, traffic patterns, data requirements, SLA targets, security sensitivity, and budget constraints to generate:
 - AWS architecture diagrams rendered via Mermaid.js
-- AWS Well-Architected Framework (WAF) scores across 5 pillars with radar charts and security checklists
-- Estimated monthly and yearly costs broken down per AWS service
-- Persistent, shareable results stored in Supabase via unique assessment URLs
+- AWS Well-Architected Framework (WAF) scores across 6 pillars with radar charts and security checklists
+- Estimated monthly costs broken down per AWS service
 
 ---
 
@@ -30,7 +29,6 @@ A 6-step wizard that analyzes workload type, traffic patterns, data requirements
 | Framework | Next.js 16.3.5 — App Router, Route Handlers |
 | Language | TypeScript 5 |
 | AI Engine | Google Gemini AI (`gemini-3.6-flash`) via `@google/generative-ai` |
-| Database | Supabase (PostgreSQL) |
 | Styling | Tailwind CSS v4, Framer Motion, Lucide React |
 | Diagrams & Charts | Mermaid.js, Recharts |
 | Validation | Zod v3, React Hook Form + `@hookform/resolvers` |
@@ -44,13 +42,12 @@ A 6-step wizard that analyzes workload type, traffic patterns, data requirements
 
 - Node.js `v18.x` or higher
 - npm / yarn / pnpm / bun
-- A Supabase project (for PostgreSQL storage)
 - A Google Gemini API Key
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/arch-advisor.git
+git clone https://github.com/AZWALUWU/arch-advisor.git
 cd arch-advisor
 ```
 
@@ -65,29 +62,17 @@ npm install
 Copy the sample environment file and fill in your credentials:
 
 ```bash
-cp .env.example .env.local
+cp .env.example .env
 ```
 
-Edit `.env.local`:
+Edit `.env`:
 
 ```env
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
-
 # Google Gemini AI
 GEMINI_API_KEY=your-gemini-api-key
 ```
 
-### 4. Database Setup
-
-Run the migration SQL in your Supabase SQL Editor:
-
-```
-src/migrations/sep14.sql
-```
-
-### 5. Run Development Server
+### 4. Run Development Server
 
 ```bash
 npm run dev
@@ -103,16 +88,19 @@ Open [http://localhost:3000](http://localhost:3000).
 src/
 ├── app/                         # Next.js App Router
 │   ├── page.tsx                 # Landing page
+│   ├── layout.tsx               # Root layout with fonts & metadata
+│   ├── globals.css              # Global Tailwind CSS styles
+│   ├── icon.svg                 # SVG favicon
 │   ├── roadmap/                 # Interactive Vibe Roadmap page
 │   ├── prd/                     # MVP PRD Generator page
 │   ├── assess/                  # Architecture Assessment wizard page
-│   ├── result/[id]/             # Architecture result dashboard (persisted)
 │   └── api/
-│       ├── assess/              # Architecture submission & result fetch endpoints
+│       ├── assess/              # Architecture analysis endpoint
 │       ├── prd/generate/        # PRD generation endpoint
 │       └── roadmap/generate/    # Roadmap flowchart generation endpoint
 ├── components/
 │   ├── ui/                      # Header, MermaidDiagram renderer
+│   ├── landing/                 # Hero, StatsBar, FeatureShowcase, CtaBanner
 │   ├── wizard/                  # Steps 1-6 for architecture assessment
 │   ├── prd/                     # 4-step PRD builder + result view
 │   ├── roadmap/                 # Interactive flowchart, node modal, roadmap view
@@ -124,10 +112,9 @@ src/
 │   │   ├── roadmap-generator.ts # Gemini AI — branching roadmap flowchart
 │   │   ├── cost-estimator.ts    # AWS cost estimation engine
 │   │   └── waf-scorer.ts        # WAF pillar scoring engine
-│   ├── supabase/client.ts       # Supabase client
 │   └── validations/             # Zod schemas for all three flows
-├── migrations/sep14.sql         # PostgreSQL table definitions
-└── types/database.ts            # TypeScript types for DB & API payloads
+└── types/
+    └── database.ts              # TypeScript types for AI output & API payloads
 ```
 
 For a comprehensive per-file breakdown, see [srcExplain.md](srcExplain.md).
@@ -163,10 +150,10 @@ flowchart LR
 ```mermaid
 flowchart LR
     A["6-Step Wizard"] --> B["Zod Validation"]
-    B --> C["POST /api/assess/submit"]
+    B --> C["POST /api/assess"]
     C --> D["Gemini AI + Cost Estimator + WAF Scorer"]
-    D --> E["Supabase PostgreSQL"]
-    E --> F["/result/[id] Dashboard"]
+    D --> E["Results Returned to Client"]
+    E --> F["Inline Result Display"]
 ```
 
 ---
