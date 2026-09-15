@@ -1,86 +1,108 @@
-import Link from "next/link";
 import { Header } from "@/components/ui/Header";
-import { ArrowRight, ShieldCheck, Zap, DollarSign, Cpu, FileCode, Layers, GitBranch, Sparkles } from "lucide-react";
+import { HeroSection } from "@/components/landing/HeroSection";
+import { StatsBar } from "@/components/landing/StatsBar";
+import { FeatureShowcase } from "@/components/landing/FeatureShowcase";
+import { FeatureShowcaseMulti } from "@/components/landing/FeatureShowcaseMulti";
+import { CtaBanner } from "@/components/landing/CtaBanner";
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#000000] text-[#E1DCC9] flex flex-col">
       <Header />
 
-      <main className="flex-1 container mx-auto max-w-5xl px-4 py-16 flex flex-col items-center justify-center text-center">
-        <div className="inline-flex items-center gap-2 rounded-full bg-[#1F150C] px-4 py-1.5 text-sm font-medium text-[#E1DCC9] ring-1 ring-[#412D15] mb-8">
-          <Sparkles className="h-4 w-4 text-[#E1DCC9]" />
-          <span>AI Architecture, PRD & Vibe Coding Suite</span>
+      <main className="flex-1 flex flex-col items-center">
+        {/* Hero */}
+        <HeroSection />
+
+        {/* Stats */}
+        <StatsBar />
+
+        {/* Divider */}
+        <div className="w-full max-w-5xl mx-auto px-4">
+          <div className="h-px bg-gradient-to-r from-transparent via-[#412D15]/60 to-transparent" />
         </div>
 
-        <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-[#E1DCC9] max-w-3xl leading-tight">
-          From App Concept to Branching Vibe Roadmap in <span className="text-[#E1DCC9] underline decoration-[#412D15]">Minutes</span>
-        </h1>
+        {/* Feature 1: MVP PRD Generator */}
+        <FeatureShowcase
+          tag="PRD Builder"
+          title="Generate Production-Ready MVP PRDs"
+          description="Define your app idea, tech stack, and SaaS integrations through a guided 4-step wizard. Get a comprehensive PRD ready for your dev team."
+          href="/prd"
+          ctaText="Build Your PRD"
+          imageSrc="/prd/result-overview-prd-generator.webp"
+          imageAlt="MVP PRD Generator - Complete PRD specification"
+          features={[
+            "User stories with acceptance criteria",
+            "Data model drafts and tech stack recommendations",
+            "Step-by-step vibe coding roadmap included",
+          ]}
+        />
 
-        <p className="mt-6 text-lg text-[#E1DCC9]/80 max-w-2xl leading-relaxed">
-          The ultimate toolkit for vibe coders, founders, and architects. Generate MVP PRDs, interactive branching AI coding roadmaps, and production AWS cloud architectures.
-        </p>
-
-        <div className="mt-10 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-          <Link
-            href="/roadmap"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#412D15] px-8 py-4 text-base font-semibold text-[#E1DCC9] shadow-xl hover:bg-[#1F150C] hover:border hover:border-[#412D15] transition-all border border-[#412D15]"
-          >
-            <GitBranch className="h-5 w-5" />
-            Generate Vibe Flowchart
-            <ArrowRight className="h-5 w-5" />
-          </Link>
-
-          <Link
-            href="/prd"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#1F150C] border border-[#412D15] px-7 py-4 text-base font-semibold text-[#E1DCC9] hover:bg-[#412D15] transition-all"
-          >
-            <FileCode className="h-5 w-5" />
-            Build MVP PRD
-          </Link>
-
-          <Link
-            href="/assess"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#1F150C] border border-[#412D15] px-7 py-4 text-base font-semibold text-[#E1DCC9] hover:bg-[#412D15] transition-all"
-          >
-            <Layers className="h-5 w-5" />
-            Evaluate Architecture
-          </Link>
+        {/* Divider */}
+        <div className="w-full max-w-5xl mx-auto px-4">
+          <div className="h-px bg-gradient-to-r from-transparent via-[#412D15]/60 to-transparent" />
         </div>
 
-        {/* Feature Grid Highlight */}
-        <div className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-6 w-full text-left">
-          <div className="rounded-2xl border border-[#412D15] bg-[#1F150C]/90 p-6 backdrop-blur-sm">
-            <div className="h-10 w-10 rounded-lg bg-[#412D15] flex items-center justify-center text-[#E1DCC9] mb-4">
-              <GitBranch className="h-5 w-5" />
-            </div>
-            <h3 className="font-semibold text-[#E1DCC9] text-lg">Interactive Vibe Roadmap</h3>
-            <p className="mt-2 text-sm text-[#E1DCC9]/70">
-              Generates non-linear decision branching flowcharts. Click any node to open a pop-up prompt with precise AI prompts.
-            </p>
-          </div>
+        {/* Feature 2: Vibe Roadmap */}
+        <FeatureShowcase
+          tag="Vibe Coding"
+          title="Turn Any PRD into an Interactive Roadmap"
+          description="Paste your Product Requirement Document and get a non-linear branching flowchart with high-precision AI prompts for every phase."
+          href="/roadmap"
+          ctaText="Try Roadmap Generator"
+          imageSrc="/vibe-roadmap/full-vibe-roadmap-overview.webp"
+          imageAlt="Interactive Vibe Roadmap - Branching flowchart with AI prompts"
+          reverse
+          features={[
+            "Non-linear branching flowchart with parallel paths",
+            "Copy-paste ready AI prompts for every node",
+            "Works with Cursor, Antigravity, Claude, and Windsurf",
+          ]}
+        />
 
-          <div className="rounded-2xl border border-[#412D15] bg-[#1F150C]/90 p-6 backdrop-blur-sm">
-            <div className="h-10 w-10 rounded-lg bg-[#412D15] flex items-center justify-center text-[#E1DCC9] mb-4">
-              <FileCode className="h-5 w-5" />
-            </div>
-            <h3 className="font-semibold text-[#E1DCC9] text-lg">MVP PRD Generator</h3>
-            <p className="mt-2 text-sm text-[#E1DCC9]/70">
-              Captures your app vision, MVP feature specs, and SaaS/PaaS/BaaS stack to generate GitHub-ready PRD markdown docs.
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-[#412D15] bg-[#1F150C]/90 p-6 backdrop-blur-sm">
-            <div className="h-10 w-10 rounded-lg bg-[#412D15] flex items-center justify-center text-[#E1DCC9] mb-4">
-              <Cpu className="h-5 w-5" />
-            </div>
-            <h3 className="font-semibold text-[#E1DCC9] text-lg">AWS Architecture Advisor</h3>
-            <p className="mt-2 text-sm text-slate-400 text-[#E1DCC9]/70">
-              Generates AWS network topology diagrams, WAF 6-pillar radar scores, and estimated monthly cost ranges.
-            </p>
-          </div>
+        {/* Divider */}
+        <div className="w-full max-w-5xl mx-auto px-4">
+          <div className="h-px bg-gradient-to-r from-transparent via-[#412D15]/60 to-transparent" />
         </div>
+
+        {/* Feature 3: AWS Architecture Advisor */}
+        <FeatureShowcaseMulti
+          tag="AWS Architecture"
+          title="Production AWS Architecture in Minutes"
+          description="Answer 6 simple questions about your workload and get a complete AWS architecture recommendation: network diagrams, WAF 6-pillar security scores, cost estimates, and actionable checklists."
+          href="/assess"
+          ctaText="Evaluate Your Architecture"
+          images={[
+            {
+              src: "/aws-architedture-advisor/aws-architecture-advisor-diagram.webp",
+              alt: "AWS Architecture Topology Diagram",
+            },
+            {
+              src: "/aws-architedture-advisor/aws-architecture-advisor-waf-radar.webp",
+              alt: "WAF 6-Pillar Radar Score",
+            },
+            {
+              src: "/aws-architedture-advisor/aws-architecture-advisor-cost-breakdown.webp",
+              alt: "AWS Cost Breakdown Estimate",
+            },
+          ]}
+        />
+
+        {/* CTA Banner */}
+        <CtaBanner />
       </main>
+
+      {/* Footer */}
+      <footer className="w-full border-t border-[#412D15]/30 py-8">
+        <div className="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#E1DCC9]/40">
+          <span>ArchAdvisor — AI Architecture, PRD & Vibe Coding Suite</span>
+          <div className="flex items-center gap-4">
+            <a href="/roadmap" className="hover:text-[#E1DCC9]/70 transition-colors">Roadmap</a>
+            <a href="/prd" className="hover:text-[#E1DCC9]/70 transition-colors">PRD</a>
+            <a href="/assess" className="hover:text-[#E1DCC9]/70 transition-colors">Assess</a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

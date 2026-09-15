@@ -18,7 +18,7 @@ Arch Advisor is a Next.js 16.3.5 (App Router) full-stack AI application. It prov
 
 1. **Vibe Roadmap** (`/roadmap`) — pastes a PRD, generates a non-linear branching Mermaid flowchart with per-node AI prompts via Gemini AI.
 2. **MVP PRD Generator** (`/prd`) — 4-step wizard generating structured PRD markdown documents via Gemini AI.
-3. **AWS Architecture Advisor** (`/assess`) — 6-step wizard generating AWS architecture diagrams, WAF scores, and cost estimates via Gemini AI, persisted to Supabase.
+3. **AWS Architecture Advisor** (`/assess`) — 6-step wizard generating AWS architecture diagrams, WAF scores, and cost estimates via Gemini AI.
 
 ---
 
@@ -46,7 +46,7 @@ When modifying prompts, always keep `responseMimeType: "application/json"` and e
 
 ## Database
 
-Supabase (PostgreSQL) via `@supabase/supabase-js`. Client initialized in `src/lib/supabase/client.ts`. Table definitions are in `src/migrations/sep14.sql`. Type definitions are in `src/types/database.ts`. Assessment results are stored and fetched by UUID at `/result/[id]`.
+No database — all AI results are returned directly to the client without persistence.
 
 ---
 
@@ -56,10 +56,8 @@ Supabase (PostgreSQL) via `@supabase/supabase-js`. Client initialized in `src/li
 src/app/          — pages and API route handlers only
 src/components/   — React UI components (no business logic)
 src/lib/engine/   — AI and computation logic
-src/lib/supabase/ — database client
 src/lib/validations/ — Zod schemas
 src/types/        — shared TypeScript interfaces
-src/migrations/   — SQL migration scripts
 ```
 
 - API routes follow the pattern: `src/app/api/<feature>/<action>/route.ts`
@@ -96,7 +94,7 @@ Do not add API logic that bypasses Zod validation.
 ## Key Behaviours to Preserve
 
 - The Roadmap page reads from `localStorage` key `arch_advisor_import_prd` on mount to auto-populate the PRD textarea when navigating from the PRD result view.
-- Assessment results at `/result/[id]` are fetched server-side by ID from Supabase and are shareable URLs.
+- Assessment results are returned directly from the API and displayed inline in the wizard page.
 - All Gemini AI responses are expected to be pure JSON — never wrap prompts to return markdown-fenced code blocks.
 - Mermaid node IDs in roadmap output must be simple alphanumeric keys (e.g. `NODE_1`, `NODE_2A`). Labels must be quoted strings.
 
@@ -105,8 +103,6 @@ Do not add API logic that bypasses Zod validation.
 ## Environment Variables
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
 GEMINI_API_KEY=
 ```
 

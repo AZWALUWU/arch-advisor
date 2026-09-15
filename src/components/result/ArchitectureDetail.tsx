@@ -1,29 +1,17 @@
 "use client";
 
 import { Cpu, ShieldCheck, Zap, Scale, HelpCircle } from "lucide-react";
-
-interface ServiceRecommendation {
-  serviceName: string;
-  category: string;
-  rationale: string;
-  alternativesConsidered?: string;
-}
-
-interface TradeOff {
-  decision: string;
-  pros: string;
-  cons: string;
-}
+import { AiOutput } from "@/types/database";
 
 interface ArchitectureDetailProps {
-  aiOutput: any;
+  aiOutput: AiOutput;
 }
 
 export function ArchitectureDetail({ aiOutput }: ArchitectureDetailProps) {
-  const services: ServiceRecommendation[] = aiOutput?.serviceRecommendations || [];
-  const tradeoffs: TradeOff[] = aiOutput?.tradeoffs || [];
-  const scalabilityStrategy = aiOutput?.scalabilityStrategy || aiOutput?.scalabilityNotes;
-  const securityStrategy = aiOutput?.securityStrategy || aiOutput?.securityNotes;
+  const services = aiOutput?.serviceRecommendations || [];
+  const tradeoffs = aiOutput?.tradeoffs || [];
+  const scalabilityStrategy = aiOutput?.scalabilityStrategy;
+  const securityStrategy = aiOutput?.securityStrategy;
 
   return (
     <div className="space-y-8">

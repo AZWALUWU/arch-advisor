@@ -1,35 +1,46 @@
-import { FormArchitectValues } from "@/lib/validations/form-schema";
+export interface ServiceRecommendation {
+  serviceName: string;
+  category: string;
+  rationale: string;
+  alternativesConsidered: string;
+}
 
-export interface EvaluationRecord {
-  id: string;
-  created_at: string;
-  project_description: string;
-  form_inputs: FormArchitectValues;
-  ai_output: {
-    executiveSummary: string;
-    tailoredMermaidSyntax: string;
-    tradeoffAnalysis: string;
-    wafChecklist: Array<{
-      category: "Security" | "Scalability" | "Cost" | "Reliability" | "Performance" | "Operations";
-      item: string;
-      severity: "critical" | "high" | "medium" | "low";
-    }>;
-  };
-  cost_estimate: {
-    monthlyTotal: { min: number; max: number };
-    breakdown: Array<{
-      service: string;
-      category: string;
-      estimatedCost: string;
-    }>;
-  };
-  waf_scores: {
-    operationalExcellence: number;
-    security: number;
-    reliability: number;
-    performanceEfficiency: number;
-    costOptimization: number;
-    sustainability: number;
-  };
-  is_public: boolean;
+export interface Tradeoff {
+  decision: string;
+  pros: string;
+  cons: string;
+}
+
+export interface WafChecklistItem {
+  category: "Security" | "Reliability" | "Performance" | "Cost Optimization" | "Operational Excellence" | "Sustainability";
+  item: string;
+  severity: "critical" | "high" | "medium" | "low";
+}
+
+export interface AiOutput {
+  executiveSummary: string;
+  tailoredMermaidSyntax: string;
+  serviceRecommendations: ServiceRecommendation[];
+  tradeoffs: Tradeoff[];
+  scalabilityStrategy: string;
+  securityStrategy: string;
+  wafChecklist: WafChecklistItem[];
+}
+
+export interface CostEstimate {
+  monthlyTotal: { min: number; max: number };
+  breakdown: Array<{
+    service: string;
+    category: string;
+    estimatedCost: string;
+  }>;
+}
+
+export interface WafScores {
+  operationalExcellence: number;
+  security: number;
+  reliability: number;
+  performanceEfficiency: number;
+  costOptimization: number;
+  sustainability: number;
 }
