@@ -168,9 +168,3 @@ We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) 
 - Code style & conventions
 - Commit message format
 - Pull request guidelines
-
----
-
-## License
-
-MIT License — see [LICENSE](LICENSE) for details.
