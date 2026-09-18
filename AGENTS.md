@@ -34,7 +34,7 @@ Arch Advisor is a Next.js 16.3.5 (App Router) full-stack AI application. It prov
 
 ## AI Engine
 
-All AI calls use **OpenRouter** via `@openrouter/ai-sdk-provider` + `ai` (Vercel AI SDK). The default model is `z-ai/glm-5.2:free` (configurable via `OPENROUTER_MODEL` env var). All engine modules live in `src/lib/engine/`:
+All AI calls use **OpenRouter** via `@openrouter/ai-sdk-provider` + `ai` (Vercel AI SDK). The default model is `openrouter/free` (configurable via `OPENROUTER_MODEL` env var). All engine modules live in `src/lib/engine/`:
 
 - `openrouter.ts` — shared OpenRouter provider instance and model config
 - `architect.ts` — architecture analysis

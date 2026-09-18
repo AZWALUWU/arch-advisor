@@ -94,12 +94,12 @@ FREE-TIER SERVICES CATALOGUE (always prefer these for MVP integrations):
 - RevenueCat     → Mobile in-app purchases & subscription management (free up to $10k MRR)
 - Upstash        → Serverless Redis (rate limiting, caching, queues) + Kafka – free tier
 - Clerk          → Authentication & user management – free up to 10k MAU
-- Supabase       → PostgreSQL database, realtime, storage, edge functions – free tier
 - Neon           → Serverless PostgreSQL with branching – free tier
+- Supabase       → PostgreSQL database, realtime, storage, edge functions – free tier
 - PostHog        → Product analytics & feature flags – free up to 1M events/month
 - Sentry         → Error monitoring & performance tracing – free tier
-- Vercel         → Web hosting & serverless functions – free hobby tier
 - Cloudflare     → CDN, DNS, DDoS protection, Workers – free tier
+- Vercel         → Web hosting & serverless functions – free hobby tier
 FOR PAID / HIGH-SCALE: Amazon Web Services (EC2, ECS Fargate, RDS Aurora, ElastiCache, S3, CloudFront, SQS, API Gateway, Lambda, WAF, Shield)
 
 DATABASE SELECTION GUIDE:

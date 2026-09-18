@@ -73,7 +73,7 @@ export async function generateRoadmapInsight(
     system:
       "You are a JSON-only API. Respond with a single raw JSON object. No markdown fences, no explanation, no commentary, no preamble.",
     prompt,
-    maxTokens: 16384,
+    maxOutputTokens: 16384,
   });
 
   console.log("[roadmap-generator] raw AI response (first 500 chars):", text.slice(0, 500));

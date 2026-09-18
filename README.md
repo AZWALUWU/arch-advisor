@@ -28,7 +28,7 @@ A 6-step wizard that analyzes workload type, traffic patterns, data requirements
 |---|---|
 | Framework | Next.js 16.3.5 — App Router, Route Handlers |
 | Language | TypeScript 5 |
-| AI Engine | OpenRouter (`z-ai/glm-5.2:free`) via `@openrouter/ai-sdk-provider` + `ai` |
+| AI Engine | OpenRouter (`openrouter/free`) via `@openrouter/ai-sdk-provider` + `ai` |
 | Styling | Tailwind CSS v4, Framer Motion, Lucide React |
 | Diagrams & Charts | Mermaid.js, Recharts |
 | Validation | Zod v3, React Hook Form + `@hookform/resolvers` |
@@ -70,7 +70,7 @@ Edit `.env`:
 ```env
 # OpenRouter AI
 OPENROUTER_API_KEY=your-openrouter-api-key
-OPENROUTER_MODEL=z-ai/glm-5.2:free
+OPENROUTER_MODEL=openrouter/free
 ```
 
 ### 4. Run Development Server
