@@ -19,11 +19,11 @@ Manages main page navigation (Pages) and backend API endpoints (Route Handlers).
   - **`page.tsx`**: Standalone page for importing/pasting PRDs and generating interactive non-linear Vibe Coding Roadmap Flowcharts.
 - **`app/api/`** (Next.js Backend API Routes)
   - `app/api/assess/`:
-    - **`route.ts`**: API endpoint that validates form input, runs Gemini AI analysis + cost estimation + WAF scoring, and returns results directly to the client.
+    - **`route.ts`**: API endpoint that validates form input, runs OpenRouter AI analysis + cost estimation + WAF scoring, and returns results directly to the client.
   - `app/api/prd/`:
-    - `generate/` → **`route.ts`**: Endpoint for validating PRD inputs and invoking Gemini AI to generate structured PRD specifications.
+    - `generate/` → **`route.ts`**: Endpoint for validating PRD inputs and invoking OpenRouter AI to generate structured PRD specifications.
   - `app/api/roadmap/`:
-    - `generate/` → **`route.ts`**: Endpoint for parsing PRD text and invoking Gemini AI to generate non-linear branching flowcharts and ultra-detailed node AI prompts.
+    - `generate/` → **`route.ts`**: Endpoint for parsing PRD text and invoking OpenRouter AI to generate non-linear branching flowcharts and ultra-detailed node AI prompts.
 
 ---
 
@@ -77,9 +77,10 @@ Manages main page navigation (Pages) and backend API endpoints (Route Handlers).
 ## 3. Folder `src/lib/` (Core Business Logic & AI Engine)
 
 ### `lib/engine/` (Core Logic & AI Processor)
-- **`gemini.ts`**: Google Gemini AI API integration module for analyzing architecture assessment input.
-- **`prd-generator.ts`**: Google Gemini AI module generating MVP PRD specifications.
-- **`roadmap-generator.ts`**: Google Gemini AI module parsing PRDs and generating non-linear decision branching flowcharts + ultra-precise node AI prompts.
+- **`openrouter.ts`**: Shared OpenRouter provider instance and model configuration.
+- **`architect.ts`**: OpenRouter AI integration module for analyzing architecture assessment input.
+- **`prd-generator.ts`**: OpenRouter AI module generating MVP PRD specifications.
+- **`roadmap-generator.ts`**: OpenRouter AI module parsing PRDs and generating non-linear decision branching flowcharts + ultra-precise node AI prompts.
 - **`cost-estimator.ts`**: Calculation algorithm for estimating AWS service costs.
 - **`waf-scorer.ts`**: Evaluation algorithm scoring AWS Well-Architected Framework pillars.
 
@@ -100,16 +101,16 @@ Manages main page navigation (Pages) and backend API endpoints (Route Handlers).
 ### 1. Architecture Evaluation Workflow
 1. **User Input**: Users fill out the multi-step wizard (`components/wizard`) on the assessment page (`app/assess/page.tsx`).
 2. **Validation**: Input data is validated by Zod (`lib/validations/form-schema.ts`).
-3. **Backend Processing**: Data is submitted via API (`app/api/assess/route.ts`), analyzed by Gemini AI (`lib/engine/gemini.ts`), costs estimated (`lib/engine/cost-estimator.ts`), and WAF scored (`lib/engine/waf-scorer.ts`).
+3. **Backend Processing**: Data is submitted via API (`app/api/assess/route.ts`), analyzed by OpenRouter AI (`lib/engine/architect.ts`), costs estimated (`lib/engine/cost-estimator.ts`), and WAF scored (`lib/engine/waf-scorer.ts`).
 4. **Result Display**: Results are returned directly from the API and displayed inline in the wizard page.
 
 ### 2. MVP PRD Generator Workflow
 1. **User Input**: Users complete the 4-step PRD Builder (`components/prd`) on the PRD page (`app/prd/page.tsx`).
 2. **Validation**: Input data is validated by Zod (`lib/validations/prd-schema.ts`).
-3. **Backend Processing**: Data is submitted via API (`app/api/prd/generate/route.ts`) and processed by Gemini AI (`lib/engine/prd-generator.ts`).
+3. **Backend Processing**: Data is submitted via API (`app/api/prd/generate/route.ts`) and processed by OpenRouter AI (`lib/engine/prd-generator.ts`).
 4. **Export & Transfer**: Formatted PRD is displayed (`PrdResultView.tsx`) with direct button to transfer PRD into the Vibe Roadmap Flowchart.
 
 ### 3. Interactive Vibe Roadmap Flowchart Workflow
 1. **User Input / Import**: Users paste PRD text directly into `/roadmap` or click "Open in Vibe Roadmap Flowchart" from the PRD result view.
-2. **AI Flowchart Generation**: Submitted to `/api/roadmap/generate` where Gemini AI (`roadmap-generator.ts`) parses the PRD into a non-linear `mermaidGraph` with branching decision nodes (Main Path, Alternative Branches, Optional Extensions).
+2. **AI Flowchart Generation**: Submitted to `/api/roadmap/generate` where OpenRouter AI (`roadmap-generator.ts`) parses the PRD into a non-linear `mermaidGraph` with branching decision nodes (Main Path, Alternative Branches, Optional Extensions).
 3. **Node Modal & Prompt Exporter**: Users interact with the flowchart (`InteractiveFlowchart.tsx`). Clicking any node triggers a popup modal (`PromptNodeModal.tsx`) containing a context-rich, ultra-detailed AI Prompt tailored for Cursor / Antigravity / Claude Code with instant "Copy Prompt" functionality.

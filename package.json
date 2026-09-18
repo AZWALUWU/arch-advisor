@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@aws-sdk/client-pricing": "^3.1131.0",
-    "@google/genai": "^2.22.0",
-    "@google/generative-ai": "^0.24.1",
     "@hookform/resolvers": "^5.9.1",
+    "@openrouter/ai-sdk-provider": "^3.0.0",
+    "ai": "^7.0.105",
     "clsx": "^2.1.1",
     "framer-motion": "^13.2.0",
     "lucide-react": "^1.45.0",

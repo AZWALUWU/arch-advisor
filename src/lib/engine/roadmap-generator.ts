@@ -1,8 +1,6 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { generateText } from "ai";
+import { openrouter, DEFAULT_MODEL } from "./openrouter";
 import { RoadmapFormValues } from "@/lib/validations/roadmap-schema";
-
-const apiKey = process.env.GEMINI_API_KEY || "";
-const genAI = new GoogleGenerativeAI(apiKey);
 
 export interface RoadmapNode {
   id: string;
@@ -24,13 +22,6 @@ export interface RoadmapGeneratedResult {
 export async function generateRoadmapInsight(
   formData: RoadmapFormValues
 ): Promise<RoadmapGeneratedResult> {
-  const model = genAI.getGenerativeModel({
-    model: "gemini-3.6-flash",
-    generationConfig: {
-      responseMimeType: "application/json",
-    },
-  });
-
   const prompt = `
   You are an expert AI Lead Architect and Vibe Coding Prompt Engineer.
   Given the following Product Requirement Document (PRD) markdown text, generate a non-linear, branching step-by-step Vibe Coding Roadmap and Flowchart.
@@ -58,7 +49,7 @@ export async function generateRoadmapInsight(
        - Step-by-step verification commands (e.g., npx tsc --noEmit, test instructions)
        - Strict alignment with the features, database types, and tech stack specified in the PRD.
 
-  JSON OUTPUT SCHEMA (Respond strictly with pure JSON matching this structure without markdown code blocks):
+  JSON OUTPUT SCHEMA (respond with ONLY the raw JSON object, no explanation, no markdown fences):
   {
     "projectName": "Extracted Project Name from PRD",
     "overview": "Short 2-sentence summary of the vibe coding implementation strategy.",
@@ -77,8 +68,33 @@ export async function generateRoadmapInsight(
   }
   `;
 
-  const result = await model.generateContent(prompt);
-  const responseText = result.response.text();
+  const { text } = await generateText({
+    model: openrouter.chat(DEFAULT_MODEL),
+    system:
+      "You are a JSON-only API. Respond with a single raw JSON object. No markdown fences, no explanation, no commentary, no preamble.",
+    prompt,
+    maxTokens: 16384,
+  });
 
-  return JSON.parse(responseText) as RoadmapGeneratedResult;
+  console.log("[roadmap-generator] raw AI response (first 500 chars):", text.slice(0, 500));
+
+  let jsonStr = text;
+
+  const codeBlockMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if (codeBlockMatch) {
+    jsonStr = codeBlockMatch[1].trim();
+  }
+
+  const jsonMatch = jsonStr.match(/\{[\s\S]*\}/);
+  if (jsonMatch) {
+    jsonStr = jsonMatch[0];
+  }
+
+  try {
+    return JSON.parse(jsonStr) as RoadmapGeneratedResult;
+  } catch {
+    throw new Error(
+      "AI returned invalid JSON. The model may be temporarily unavailable. Please try again."
+    );
+  }
 }

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { formArchitectSchema } from "@/lib/validations/form-schema";
 import { calculateWafScores } from "@/lib/engine/waf-scorer";
-import { generateArchitectInsight } from "@/lib/engine/gemini";
+import { generateArchitectInsight } from "@/lib/engine/architect";
 import { calculateCostEstimate } from "@/lib/engine/cost-estimator";
 
 export async function POST(req: NextRequest) {

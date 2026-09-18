@@ -1,8 +1,6 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { generateText } from "ai";
+import { openrouter, DEFAULT_MODEL } from "./openrouter";
 import { PrdFormValues } from "@/lib/validations/prd-schema";
-
-const apiKey = process.env.GEMINI_API_KEY || "";
-const genAI = new GoogleGenerativeAI(apiKey);
 
 export interface PrdGeneratedResult {
   title: string;
@@ -34,6 +32,43 @@ export interface PrdGeneratedResult {
     fields: string[];
     relationships: string;
   }>;
+  uiUxDesign: {
+    designPrinciples: string;
+    colorPalette: {
+      primary: string;
+      secondary: string;
+      accent: string;
+      neutral: string;
+      semantic: {
+        success: string;
+        warning: string;
+        error: string;
+        info: string;
+      };
+    };
+    typography: {
+      fontFamily: string;
+      scale: string;
+    };
+    screens: Array<{
+      screenName: string;
+      route: string;
+      purpose: string;
+      keyComponents: string[];
+      layoutDescription: string;
+      states: {
+        loading: string;
+        empty: string;
+        error: string;
+      };
+    }>;
+    userFlow: Array<{
+      flowName: string;
+      steps: string[];
+    }>;
+    responsiveStrategy: string;
+    accessibilityNotes: string;
+  };
   vibeCodingRoadmap: Array<{
     stepNumber: number;
     stepTitle: string;
@@ -43,14 +78,9 @@ export interface PrdGeneratedResult {
   fullMarkdownContent: string;
 }
 
-export async function generatePrdInsight(formData: PrdFormValues): Promise<PrdGeneratedResult> {
-  const model = genAI.getGenerativeModel({
-    model: "gemini-3.6-flash",
-    generationConfig: {
-      responseMimeType: "application/json",
-    },
-  });
-
+export async function generatePrdInsight(
+  formData: PrdFormValues
+): Promise<PrdGeneratedResult> {
   const systemDesignContext = `
 === SYSTEM DESIGN & ARCHITECTURE KNOWLEDGE BASE ===
 
@@ -116,15 +146,33 @@ API SECURITY CHECKLIST:
 - XSS Prevention: sanitize & escape all user-generated content before rendering
 - HTTPS Everywhere: enforce TLS; redirect HTTP to HTTPS (Cloudflare handles this for free)
 - Input Validation: validate all inputs server-side with Zod schemas
-=== END SYSTEM DESIGN KNOWLEDGE BASE ===
+=== END SYSTEM DESIGN KNOWLEDGE BASE===
+`;
+
+  const uiUxContext = `
+=== UI/UX DESIGN KNOWLEDGE BASE ===
+
+UI/UX DESIGN GUIDELINES:
+- Every screen must map to a concrete route (e.g. "/dashboard", "/settings/billing") and list which ShadcnUI components are used (Button, Card, Dialog, Table, Sheet, Tabs, etc.) — never leave UI abstract or generic.
+- Define loading, empty, and error states explicitly per screen. AI coding assistants must not have to guess these — describe what the user sees in each state (e.g. "Loading: skeleton cards matching the grid layout", "Empty: illustration + 'Create your first project' CTA", "Error: inline toast with retry button").
+- Follow mobile-first responsive design using Tailwind breakpoints (sm/md/lg/xl); describe how key screens adapt between mobile and desktop.
+- Design principles must be actionable and specific, not generic buzzwords ("clean UI"). Specify information density, spacing rhythm, corner radius / elevation style, and primary interaction patterns (e.g. "card-based dashboard, 8px spacing grid, subtle shadows, single primary action per view").
+- Color palette must be expressed as concrete hex values or CSS variable names, ready to drop into a Tailwind/ShadcnUI theme config (globals.css / tailwind.config).
+- User flows must trace the exact screen-to-screen navigation path for the core use cases derived from the MVP features (e.g. signup → onboarding → first core action → success state).
+- Include an accessibility baseline: minimum color contrast ratio (WCAG AA, 4.5:1 for text), visible focus states, aria-labels on icon-only interactive elements, keyboard navigability for primary flows.
+- Typography must specify a concrete font family (prefer a Google Font compatible with Next.js font optimization) and reference Tailwind's default type scale unless a custom scale is justified.
+- Keep the number of screens proportional to the MVP feature set — do not invent screens unrelated to the "Must Have" and "Should Have" features.
+=== END UI/UX DESIGN KNOWLEDGE BASE ===
 `;
 
   const prompt = `
-  You are an elite Product Manager, Tech Lead, and Vibe Coding Architect with deep knowledge of modern system design.
+  You are an elite Product Manager, Tech Lead, UI/UX Designer, and Vibe Coding Architect with deep knowledge of modern system design and interface design.
   Generate an actionable, production-ready Product Requirement Document (PRD) tailored for an MVP (Minimum Viable Product).
-  This document will be used by vibe coders, AI coding assistants (like Cursor, Antigravity, Claude, Windsurf), and founders to build the app from scratch.
+  This document will be used by vibe coders, AI coding assistants (like Cursor, Antigravity, Claude, Windsurf), and founders to build the app from scratch — including its UI.
 
   ${systemDesignContext}
+
+  ${uiUxContext}
 
   INSTRUCTIONS FOR TECH STACK & INTEGRATIONS:
   - Always prefer the free-tier services listed above when recommending integrations for MVP stage.
@@ -137,6 +185,7 @@ API SECURITY CHECKLIST:
   - Use Cloudflare for CDN/DNS and Vercel for hosting.
   - Include security considerations (CORS, rate limiting, input validation with Zod, HTTPS) in the roadmap steps.
   - The vibeCodingRoadmap aiPromptSnippet must be a precise, copy-paste-ready prompt an AI coding assistant can execute immediately.
+  - The vibeCodingRoadmap must include at least one step dedicated to implementing the UI/UX design (screens, components, states) described in uiUxDesign, with an aiPromptSnippet that references the specific screens, components, and states to build.
 
   USER PRD INPUT:
   ${JSON.stringify(formData, null, 2)}
@@ -182,6 +231,47 @@ API SECURITY CHECKLIST:
         "relationships": "Relationship description (e.g., 1-to-many with Posts)"
       }
     ],
+    "uiUxDesign": {
+      "designPrinciples": "Specific, actionable design direction (layout style, spacing rhythm, density, interaction patterns) — not generic buzzwords.",
+      "colorPalette": {
+        "primary": "#HEX",
+        "secondary": "#HEX",
+        "accent": "#HEX",
+        "neutral": "#HEX",
+        "semantic": {
+          "success": "#HEX",
+          "warning": "#HEX",
+          "error": "#HEX",
+          "info": "#HEX"
+        }
+      },
+      "typography": {
+        "fontFamily": "e.g. Inter (Google Font, Next.js font optimization)",
+        "scale": "e.g. Tailwind default type scale (text-sm to text-4xl), headings font-semibold"
+      },
+      "screens": [
+        {
+          "screenName": "e.g. Dashboard",
+          "route": "/dashboard",
+          "purpose": "What this screen is for and who sees it",
+          "keyComponents": ["Card", "Table", "Button", "Sheet"],
+          "layoutDescription": "Textual wireframe: header with X, sidebar with Y, main content area showing Z, grid/list layout details",
+          "states": {
+            "loading": "What the user sees while data loads",
+            "empty": "What the user sees with no data, including CTA",
+            "error": "What the user sees on failure, including recovery action"
+          }
+        }
+      ],
+      "userFlow": [
+        {
+          "flowName": "e.g. Onboarding flow",
+          "steps": ["Landing page", "Sign up (Clerk)", "Onboarding form", "First core action", "Success/dashboard"]
+        }
+      ],
+      "responsiveStrategy": "How the layout adapts across mobile/tablet/desktop breakpoints for the key screens",
+      "accessibilityNotes": "WCAG AA contrast, focus states, aria-labels, keyboard navigation notes"
+    },
     "vibeCodingRoadmap": [
       {
         "stepNumber": 1,
@@ -190,12 +280,14 @@ API SECURITY CHECKLIST:
         "expectedDeliverable": "Working baseline app with database connection and auth flow"
       }
     ],
-    "fullMarkdownContent": "Complete, beautifully formatted GitHub Markdown PRD containing all sections above with headers, tables, code blocks, and check-lists ready to save as PRD.md. Include a Security Considerations section and an Integration Architecture diagram in Mermaid syntax."
+    "fullMarkdownContent": "Complete, beautifully formatted GitHub Markdown PRD containing all sections above with headers, tables, code blocks, and check-lists ready to save as PRD.md. Include a Security Considerations section, a UI/UX Design section (design principles, color palette table, typography, screens with states, user flows), and an Integration Architecture diagram in Mermaid syntax."
   }
   `;
 
-  const result = await model.generateContent(prompt);
-  const responseText = result.response.text();
+  const { text } = await generateText({
+    model: openrouter.chat(DEFAULT_MODEL),
+    prompt,
+  });
 
-  return JSON.parse(responseText) as PrdGeneratedResult;
+  return JSON.parse(text) as PrdGeneratedResult;
 }

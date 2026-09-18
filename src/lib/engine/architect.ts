@@ -1,18 +1,11 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { generateText } from "ai";
+import { openrouter, DEFAULT_MODEL } from "./openrouter";
 import { FormArchitectValues } from "@/lib/validations/form-schema";
 import { AiOutput } from "@/types/database";
 
-const apiKey = process.env.GEMINI_API_KEY || "";
-const genAI = new GoogleGenerativeAI(apiKey);
-
-export async function generateArchitectInsight(formData: FormArchitectValues): Promise<AiOutput> {
-  const model = genAI.getGenerativeModel({
-    model: "gemini-3.6-flash",
-    generationConfig: {
-      responseMimeType: "application/json",
-    },
-  });
-
+export async function generateArchitectInsight(
+  formData: FormArchitectValues
+): Promise<AiOutput> {
   const systemDesignContext = `
 === SYSTEM DESIGN & ARCHITECTURE KNOWLEDGE BASE ===
 
@@ -86,7 +79,7 @@ AWS WELL-ARCHITECTED SECURITY CHECKLIST:
 - DDoS Protection: AWS Shield Standard (free) or Shield Advanced; CloudFront absorbs volumetric attacks
 - CSRF: CSRF tokens on state-changing endpoints; SameSite cookie policy
 - Audit Logging: CloudTrail for API calls, VPC Flow Logs for network traffic, GuardDuty for threat detection
-=== END SYSTEM DESIGN KNOWLEDGE BASE ===
+=== END SYSTEM DESIGN KNOWLEDGE BASE===
 `;
 
   const prompt = `
@@ -138,8 +131,10 @@ AWS WELL-ARCHITECTED SECURITY CHECKLIST:
   }
   `;
 
-  const result = await model.generateContent(prompt);
-  const responseText = result.response.text();
+  const { text } = await generateText({
+    model: openrouter.chat(DEFAULT_MODEL),
+    prompt,
+  });
 
-  return JSON.parse(responseText) as AiOutput;
+  return JSON.parse(text) as AiOutput;
 }

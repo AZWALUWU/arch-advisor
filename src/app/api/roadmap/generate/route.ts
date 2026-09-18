@@ -9,8 +9,12 @@ export async function POST(req: NextRequest) {
     // 1. Validate Form Input via Zod
     const validationResult = roadmapFormSchema.safeParse(body);
     if (!validationResult.success) {
+      const fieldErrors = validationResult.error.flatten().fieldErrors;
+      const message = Object.entries(fieldErrors)
+        .map(([field, msgs]) => `${field}: ${msgs?.join(", ")}`)
+        .join("; ");
       return NextResponse.json(
-        { error: "Validation Error", details: validationResult.error.format() },
+        { error: "Validation Error", message, details: fieldErrors },
         { status: 400 }
       );
     }

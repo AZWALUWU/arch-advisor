@@ -45,7 +45,7 @@ const SAAS_SERVICES_LIST = [
     category: "Email & AI APIs",
     items: [
       { id: "resend", label: "Resend / React Email", desc: "Modern transactional email API with React templates" },
-      { id: "gemini_api", label: "Google Gemini AI API", desc: "Multimodal LLM API for AI features & text generation" },
+      { id: "openrouter_api", label: "OpenRouter API", desc: "Unified AI gateway — one API key for hundreds of LLM models (Claude, GPT, Gemini, Llama, etc.)" },
       { id: "openai_api", label: "OpenAI API (GPT-4o)", desc: "Conversational AI, embeddings & code execution" },
     ],
   },

@@ -16,9 +16,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 Arch Advisor is a Next.js 16.3.5 (App Router) full-stack AI application. It provides three tools:
 
-1. **Vibe Roadmap** (`/roadmap`) — pastes a PRD, generates a non-linear branching Mermaid flowchart with per-node AI prompts via Gemini AI.
-2. **MVP PRD Generator** (`/prd`) — 4-step wizard generating structured PRD markdown documents via Gemini AI.
-3. **AWS Architecture Advisor** (`/assess`) — 6-step wizard generating AWS architecture diagrams, WAF scores, and cost estimates via Gemini AI.
+1. **Vibe Roadmap** (`/roadmap`) — pastes a PRD, generates a non-linear branching Mermaid flowchart with per-node AI prompts via OpenRouter AI.
+2. **MVP PRD Generator** (`/prd`) — 4-step wizard generating structured PRD markdown documents via OpenRouter AI.
+3. **AWS Architecture Advisor** (`/assess`) — 6-step wizard generating AWS architecture diagrams, WAF scores, and cost estimates via OpenRouter AI.
 
 ---
 
@@ -34,13 +34,14 @@ Arch Advisor is a Next.js 16.3.5 (App Router) full-stack AI application. It prov
 
 ## AI Engine
 
-All Gemini AI calls use `@google/generative-ai` (not `@google/genai`). The active model is `gemini-3.6-flash` with `responseMimeType: "application/json"`. All engine modules live in `src/lib/engine/`:
+All AI calls use **OpenRouter** via `@openrouter/ai-sdk-provider` + `ai` (Vercel AI SDK). The default model is `z-ai/glm-5.2:free` (configurable via `OPENROUTER_MODEL` env var). All engine modules live in `src/lib/engine/`:
 
-- `gemini.ts` — architecture analysis
+- `openrouter.ts` — shared OpenRouter provider instance and model config
+- `architect.ts` — architecture analysis
 - `prd-generator.ts` — PRD generation
 - `roadmap-generator.ts` — branching roadmap flowchart
 
-When modifying prompts, always keep `responseMimeType: "application/json"` and ensure the response is parsed with `JSON.parse(result.response.text())`. Never switch to streaming responses in engine files.
+When modifying prompts, always use `generateText()` from the `ai` package with `openrouter.chat(DEFAULT_MODEL)`. Ensure the response is parsed with `JSON.parse(text)`. Never switch to streaming responses in engine files.
 
 ---
 
@@ -95,7 +96,7 @@ Do not add API logic that bypasses Zod validation.
 
 - The Roadmap page reads from `localStorage` key `arch_advisor_import_prd` on mount to auto-populate the PRD textarea when navigating from the PRD result view.
 - Assessment results are returned directly from the API and displayed inline in the wizard page.
-- All Gemini AI responses are expected to be pure JSON — never wrap prompts to return markdown-fenced code blocks.
+- All AI responses are expected to be pure JSON — never wrap prompts to return markdown-fenced code blocks.
 - Mermaid node IDs in roadmap output must be simple alphanumeric keys (e.g. `NODE_1`, `NODE_2A`). Labels must be quoted strings.
 
 ---
@@ -103,10 +104,11 @@ Do not add API logic that bypasses Zod validation.
 ## Environment Variables
 
 ```env
-GEMINI_API_KEY=
+OPENROUTER_API_KEY=
+OPENROUTER_MODEL=
 ```
 
-`GEMINI_API_KEY` is server-only (no `NEXT_PUBLIC_` prefix). Never expose it to the client.
+`OPENROUTER_API_KEY` is server-only (no `NEXT_PUBLIC_` prefix). Never expose it to the client.
 
 ---
 

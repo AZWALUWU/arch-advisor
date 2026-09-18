@@ -13,9 +13,10 @@ function RoadmapContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [roadmapResult, setRoadmapResult] = useState<RoadmapGeneratedResult | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Check if PRD content was passed via localStorage or query params
+    setMounted(true);
     const storedPrd = localStorage.getItem("arch_advisor_import_prd");
     if (storedPrd) {
       setPrdText(storedPrd);
@@ -106,7 +107,7 @@ function RoadmapContent() {
 
               <button
                 onClick={handleGenerate}
-                disabled={isLoading || prdText.trim().length < 30}
+                disabled={!mounted || isLoading || prdText.trim().length < 30}
                 className="inline-flex items-center gap-2 rounded-xl bg-[#412D15] px-7 py-3 text-xs font-bold text-[#E1DCC9] hover:bg-[#412D15]/70 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-xl border border-[#E1DCC9]/20"
               >
                 {isLoading ? (

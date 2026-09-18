@@ -2,7 +2,7 @@
 
 > AI-Powered Architecture, PRD & Vibe Coding Suite
 
-Arch Advisor is a full-stack AI toolkit built with **Next.js 16**, **Google Gemini AI**, and **Tailwind CSS**. Designed for vibe coders, founders, and solutions architects to go from a raw app concept all the way to a production-grade AWS cloud architecture — in minutes.
+Arch Advisor is a full-stack AI toolkit built with **Next.js 16**, **OpenRouter AI**, and **Tailwind CSS**. Designed for vibe coders, founders, and solutions architects to go from a raw app concept all the way to a production-grade AWS cloud architecture — in minutes.
 
 ---
 
@@ -28,7 +28,7 @@ A 6-step wizard that analyzes workload type, traffic patterns, data requirements
 |---|---|
 | Framework | Next.js 16.3.5 — App Router, Route Handlers |
 | Language | TypeScript 5 |
-| AI Engine | Google Gemini AI (`gemini-3.6-flash`) via `@google/generative-ai` |
+| AI Engine | OpenRouter (`z-ai/glm-5.2:free`) via `@openrouter/ai-sdk-provider` + `ai` |
 | Styling | Tailwind CSS v4, Framer Motion, Lucide React |
 | Diagrams & Charts | Mermaid.js, Recharts |
 | Validation | Zod v3, React Hook Form + `@hookform/resolvers` |
@@ -42,7 +42,7 @@ A 6-step wizard that analyzes workload type, traffic patterns, data requirements
 
 - Node.js `v18.x` or higher
 - npm / yarn / pnpm / bun
-- A Google Gemini API Key
+- An OpenRouter API Key
 
 ### 1. Clone the Repository
 
@@ -68,8 +68,9 @@ cp .env.example .env
 Edit `.env`:
 
 ```env
-# Google Gemini AI
-GEMINI_API_KEY=your-gemini-api-key
+# OpenRouter AI
+OPENROUTER_API_KEY=your-openrouter-api-key
+OPENROUTER_MODEL=z-ai/glm-5.2:free
 ```
 
 ### 4. Run Development Server
@@ -107,11 +108,12 @@ src/
 │   └── result/                  # WAF radar chart, cost chart, architecture detail
 ├── lib/
 │   ├── engine/
-│   │   ├── gemini.ts            # Gemini AI — architecture analysis
-│   │   ├── prd-generator.ts     # Gemini AI — PRD generation
-│   │   ├── roadmap-generator.ts # Gemini AI — branching roadmap flowchart
-│   │   ├── cost-estimator.ts    # AWS cost estimation engine
-│   │   └── waf-scorer.ts        # WAF pillar scoring engine
+│   │   ├── openrouter.ts          # OpenRouter provider instance & model config
+│   │   ├── architect.ts           # OpenRouter AI — architecture analysis
+│   │   ├── prd-generator.ts       # OpenRouter AI — PRD generation
+│   │   ├── roadmap-generator.ts   # OpenRouter AI — branching roadmap flowchart
+│   │   ├── cost-estimator.ts      # AWS cost estimation engine
+│   │   └── waf-scorer.ts          # WAF pillar scoring engine
 │   └── validations/             # Zod schemas for all three flows
 └── types/
     └── database.ts              # TypeScript types for AI output & API payloads
@@ -128,7 +130,7 @@ For a comprehensive per-file breakdown, see [srcExplain.md](srcExplain.md).
 ```mermaid
 flowchart LR
     A["PRD Text Input"] --> B["POST /api/roadmap/generate"]
-    B --> C["Gemini AI — Branching Flowchart + Node Prompts"]
+    B --> C["OpenRouter AI — Branching Flowchart + Node Prompts"]
     C --> D["Interactive Mermaid Graph"]
     D --> E["Click Node — PromptNodeModal"]
     E --> F["Copy AI Prompt to Cursor / Claude / Windsurf"]
@@ -140,7 +142,7 @@ flowchart LR
 flowchart LR
     A["4-Step Wizard"] --> B["Zod Validation"]
     B --> C["POST /api/prd/generate"]
-    C --> D["Gemini AI — Structured PRD JSON"]
+    C --> D["OpenRouter AI — Structured PRD JSON"]
     D --> E["PRD Result View + Export Markdown"]
     E -->|Optional| F["Open in Vibe Roadmap"]
 ```
@@ -151,7 +153,7 @@ flowchart LR
 flowchart LR
     A["6-Step Wizard"] --> B["Zod Validation"]
     B --> C["POST /api/assess"]
-    C --> D["Gemini AI + Cost Estimator + WAF Scorer"]
+    C --> D["OpenRouter AI + Cost Estimator + WAF Scorer"]
     D --> E["Results Returned to Client"]
     E --> F["Inline Result Display"]
 ```
